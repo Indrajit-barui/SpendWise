@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar/Sidebar"
 import Stats from "./components/Stats/Stats"
 import IncomeOverview from "./components/IncomeOverview/IncomeOverview"
 import ReacentTransaction from "./components/RecentTransaction/ReacentTransaction"
+import ReacentIncome from "./components/RecentIncome/ReacentIncome"
 const App = () => {
 
   const [isSidebarOpen, setSidebar] = useState(false)
@@ -23,9 +24,10 @@ const App = () => {
         <div>
         <Stats/>
       </div>
-      <div className="flex gap-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 <IncomeOverview/>
 <ReacentTransaction/>
+<ReacentIncome/>
       </div>
       
 

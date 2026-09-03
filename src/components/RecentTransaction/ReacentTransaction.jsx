@@ -39,7 +39,7 @@ const ReacentTransaction = () => {
   },
 ];
   return (
-    <section className="w-[50%] border border-black mt-5">
+    <section className="w-full border border-gray-600 mt-5">
         {/* header */}
         <div className="flex justify-between px-5 py-4">
         <p className="font-medium text-xl">Recent Transaction</p>

@@ -29,7 +29,7 @@ import { PieChart, Pie, Tooltip, Cell } from "recharts";
 const totalIncome=incomeData.reduce((total,item)=>total+item.amount,0)
 
   return (
-    <section className="  w-[50%] border border-black mt-5 ">
+    <section className="  w-full border border-black mt-5 ">
       
       {/* header */}
       <div className="flex justify-between px-5 py-4">
