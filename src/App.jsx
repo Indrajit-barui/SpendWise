@@ -5,6 +5,7 @@ import Stats from "./components/Stats/Stats"
 import IncomeOverview from "./components/IncomeOverview/IncomeOverview"
 import ReacentTransaction from "./components/RecentTransaction/ReacentTransaction"
 import ReacentIncome from "./components/RecentIncome/ReacentIncome"
+import RecentExpenses from "./components/Recent Expenses/RecentExpenses"
 const App = () => {
 
   const [isSidebarOpen, setSidebar] = useState(false)
@@ -28,6 +29,7 @@ const App = () => {
 <IncomeOverview/>
 <ReacentTransaction/>
 <ReacentIncome/>
+<RecentExpenses/>
       </div>
       
 
