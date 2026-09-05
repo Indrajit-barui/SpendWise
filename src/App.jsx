@@ -11,7 +11,7 @@ const App = () => {
   const [isSidebarOpen, setSidebar] = useState(false)
 
   return (
-    <>
+    <div className="">
     
       {/* Sidebar */}
       <Sidebar
@@ -36,7 +36,7 @@ const App = () => {
       </div>
 
       
-    </>
+    </div>
   )
 }
 

@@ -29,7 +29,7 @@ import { PieChart, Pie, Tooltip, Cell } from "recharts";
 const totalIncome=incomeData.reduce((total,item)=>total+item.amount,0)
 
   return (
-    <section className="  w-full border border-black mt-5 ">
+    <section className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
       
       {/* header */}
       <div className="flex justify-between px-5 py-4">
@@ -39,8 +39,8 @@ const totalIncome=incomeData.reduce((total,item)=>total+item.amount,0)
         </div>
       
       {/* chart */}
-<div className="flex items-center gap-8 px-5 pb-5">
-      <div className="relative">
+<div className="flex flex-col xl:flex-row items-center gap-6 xl:gap-8 px-5 pb-5">
+      <div className="relative shrink-0">
         <PieChart width={200} height={200} >
   <Pie
     data={incomeData}
@@ -67,7 +67,7 @@ const totalIncome=incomeData.reduce((total,item)=>total+item.amount,0)
 </div>
       </div>
       {/* Income categories */}
-      <div className="space-y-2">
+      <div className="space-y-3 w-full">
         {
           incomeData.map((item)=>(
             <div key={item.name} className="grid grid-cols-3">
@@ -88,6 +88,8 @@ const totalIncome=incomeData.reduce((total,item)=>total+item.amount,0)
           ))
         }
       </div>
+
+      
       </div>
     </section>
   )

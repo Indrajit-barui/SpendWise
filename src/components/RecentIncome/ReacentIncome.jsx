@@ -33,7 +33,7 @@ const ReacentIncome = () => {
   },
 ];
   return (
-    <section className="w-full border border-black">
+     <section className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
         {/* header */}
  <div className="flex justify-between px-5 py-4">
         <p className="font-medium text-xl">Income Overview</p>
