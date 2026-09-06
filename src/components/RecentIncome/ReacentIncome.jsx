@@ -36,13 +36,13 @@ const ReacentIncome = () => {
      <section className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
         {/* header */}
  <div className="flex justify-between px-5 py-4">
-        <p className="font-medium text-xl">Income Overview</p>
+        <p className="font-medium text-xl">Recent Income</p>
         <button className="border border-gray-500 bg-blue-600 text-white text-sm px-2 py-1 rounded-sm"><i class="fa-solid fa-plus"></i> Add Income </button>
 
         </div>
 
         {/* Table header */}
-        <div className="grid grid-cols-5 items-center  h-10 border bg-gray-400 text-sm px-4 py-3 ">
+        <div className=" hidden lg:grid grid-cols-5 items-center  h-10 border bg-gray-400 text-sm px-4 py-3 ">
             <p>Source</p>
             <p>Amount</p>
             <p>Date</p>
@@ -55,7 +55,9 @@ const ReacentIncome = () => {
         <div className="">
             {
                 incomes.map((item)=>(
-                    <div key={item.id} className="grid grid-cols-5 px-4 py-2 items-center border-b text-sm">
+                // Desktop
+                  <div key={item.id} >
+                    <div className=" hidden xl:grid grid-cols-5 px-4 py-2 items-center border-b text-sm">
                       {/* Source */}
                       <div >
                         {item.source}
@@ -78,7 +80,7 @@ const ReacentIncome = () => {
                       {/* Actions */}
 
 
-                   <div className="flex items-center justify-center gap-2">
+                   <div className="flex items-center justify-center gap-2 ">
 
                      <button className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-gray-600 hover:bg-gray-100">
                            <Pencil size={16} />
@@ -91,6 +93,39 @@ const ReacentIncome = () => {
                    </div>
 
                     </div>
+                {/* mobile */}
+                     <div className="xl:hidden relative border-b px-4 py-4">
+                      {/* Source */}
+                       <div>
+                        {item.source}
+                       </div>
+                       {/* Ammount */}
+                       <div>
+                        {item.amount}
+                       </div>
+                       {/* Data and notes*/}
+                       <div className="flex gap-5 text-sm text-gray-500">
+                        <span>{item.date}</span>
+                        <span>{item.notes}</span>
+                       </div>
+
+                       {/* Actions */}
+
+                       <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
+                         <button className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-100">
+            <Pencil size={16} />
+          </button>
+
+          <button className="flex h-8 w-8 items-center justify-center rounded-lg border border-red-100 text-red-500 hover:bg-red-50">
+            <Trash2 size={16} />
+            </button>
+                       </div>
+                     </div>
+                    </div>
+
+                   
+
+                    
                 ))
             }
         </div>
