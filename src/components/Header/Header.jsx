@@ -1,9 +1,10 @@
 import { Datepicker } from "../Datepicker"
 import { Bell } from "lucide-react"
+import { useLocation } from "react-router-dom"
 
 
-export const Header = ({setSidebar}) => {
- 
+const  Header = ({setSidebar}) => {
+const location=useLocation();
   return (
     <header className="flex items-center justify-between p-4">
       
@@ -11,7 +12,7 @@ export const Header = ({setSidebar}) => {
         {/* left section */}
         <div className="flex items-center gap-4">
            <i className="fa-solid fa-bars text-xl  cursor-pointer" onClick={()=>setSidebar(true)}></i>
-           <p className="text-xl md:text-2xl">Dashboard</p>
+           <p className="text-xl md:text-2xl">{location.pathname.slice(1)}</p>
         </div>
 
         {/* right section */}
@@ -26,3 +27,6 @@ export const Header = ({setSidebar}) => {
         </header>
   )
 }
+
+
+export default Header;

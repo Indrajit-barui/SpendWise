@@ -39,7 +39,7 @@ const totalIncome=incomeData.reduce((total,item)=>total+item.amount,0)
         </div>
       
       {/* chart */}
-<div className="flex flex-col xl:flex-row items-center gap-6 xl:gap-8 px-5 pb-5">
+<div className="flex flex-col 2xl:flex-row items-center gap-6 2xl:gap-8 px-5 pb-5">
       <div className="relative shrink-0">
         <PieChart width={200} height={200} >
   <Pie

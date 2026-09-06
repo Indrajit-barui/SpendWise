@@ -8,10 +8,12 @@ import {
   Settings,
   X,
 } from "lucide-react"
+import { useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
 import { useState } from "react";
 function Sidebar({ isSidebarOpen, setSidebar }) {
   const[activeItem,setActiveItem]=useState("Dashboard")
+  const navigate=useNavigate();
   return (
     <aside
       className={`
@@ -44,7 +46,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
         <div className="flex items-center gap-3">
 
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600 text-white">
-            S
+            
           </div>
 
           <div>
@@ -67,21 +69,29 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
           icon={<LayoutDashboard size={20} className="text-blue-700"/>}
           text="Dashboard"
           active={activeItem==="Dashboard"}
-          onClick={()=>setActiveItem("Dashboard")}
+          onClick={()=>{setActiveItem("Dashboard");
+            navigate("/Dashboard")
+          }}
+          
         />
 
         <NavItem
           icon={<Wallet size={20} className="text-green-500"/>}
           text="Income"
           active={activeItem==="Income"}
-          onClick={()=>setActiveItem("Income")}
+          onClick={()=>{setActiveItem("Income")
+
+            navigate("/Income");
+          }}
         />
 
         <NavItem
           icon={<CreditCard size={20} className="text-red-500"/>}
           text="Expenses"
           active={activeItem==="Expenses"}
-          onClick={()=>setActiveItem("Expenses")}
+          onClick={()=>{setActiveItem("Expenses")
+            navigate("/Expenses")
+          }}
         />
 
         <NavItem
@@ -89,14 +99,18 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
           text="Analytics"
 
            active={activeItem==="Analytics"}
-          onClick={()=>setActiveItem("Analytics")}
+          onClick={()=>{setActiveItem("Analytics")
+              navigate("/Analytics")
+          }}
         />
 
         <NavItem
           icon={<Tags size={20} className="text-orange-500"/>}
           text="Categories"
           active={activeItem==="Categories"}
-          onClick={()=>setActiveItem("Categories")}
+          onClick={()=>{setActiveItem("Categories")
+            navigate("/Category")
+          }}
         />
 
         <NavItem
@@ -104,14 +118,19 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
           text="Reports"
 
            active={activeItem==="Reports"}
-          onClick={()=>setActiveItem("Reports")}
+          onClick={()=>{setActiveItem("Reports")
+            navigate("/Report")
+          }}
         />
 
         <NavItem
           icon={<Settings size={20} className="text-gray-500"/>}
           text="Settings"
           active={activeItem==="Settings"}
-          onClick={()=>setActiveItem("Settings")}
+          onClick={()=>{setActiveItem("Settings")
+            navigate("/Settings")
+          }
+        }
         />
 
       </nav>

@@ -33,8 +33,9 @@ function Stats() {
         iconColor="text-blue-700"
         bgColor="bg-blue-100"
       />
-
-      <StatCard
+    
+     
+         <StatCard
         title="Today's Expenses"
         amount="₹ 320"
         text="12% from yesterday"
@@ -43,6 +44,7 @@ function Stats() {
         iconColor="text-orange-500"
         bgColor="bg-orange-100"
       />
+      
 
     </section>
   )

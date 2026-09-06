@@ -1,43 +1,47 @@
-import { useState } from "react"
-import { Header } from "./components/Header/Header"
-import Sidebar from "./components/Sidebar/Sidebar"
-import Stats from "./components/Stats/Stats"
-import IncomeOverview from "./components/IncomeOverview/IncomeOverview"
-import ReacentTransaction from "./components/RecentTransaction/ReacentTransaction"
-import ReacentIncome from "./components/RecentIncome/ReacentIncome"
-import RecentExpenses from "./components/Recent Expenses/RecentExpenses"
-const App = () => {
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-  const [isSidebarOpen, setSidebar] = useState(false)
+import Header from "./components/Header/Header";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Dashboard from "./pages/Dashboard";
+import Analytics from "./pages/Analytics";
+import Income from "./pages/Income";
+import Expenses from "./pages/Expenses";
+import Category from "./pages/Category";
+import Report from "./pages/Report";
+import Settings from "./pages/Settings";
+const App = () => {
+  const [isSidebarOpen, setSidebar] = useState(false);
 
   return (
-    <div className="">
-    
-      {/* Sidebar */}
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        setSidebar={setSidebar}
-      />
+    <BrowserRouter>
+      <div>
+        
+        {/* Sidebar */}
+        <Sidebar
+          isSidebarOpen={isSidebarOpen}
+          setSidebar={setSidebar}
+        />
 
-      {/* Main content */}
-      <div className="px-1 pt-3 md:px-10 md:ml-64">
-        <Header setSidebar={setSidebar} />
-        <div>
-        <Stats/>
+        {/* Main Content */}
+        <div className="px-1 pt-3 md:px-10 md:ml-64">
+          
+          <Header setSidebar={setSidebar} />
+
+          <Routes>
+            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/Analytics" element={<Analytics/>}></Route>
+            <Route path="/Income" element={<Income/>}></Route>
+            <Route path="/Expenses" element={<Expenses/>}></Route> 
+            <Route path="/Category" element={<Category/>}></Route> 
+            <Route path="/Report" element={<Report/>}></Route> 
+            <Route path="/Settings" element={<Settings/>}></Route>
+          </Routes>
+
+        </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-<IncomeOverview/>
-<ReacentTransaction/>
-<ReacentIncome/>
-<RecentExpenses/>
-      </div>
-      
+    </BrowserRouter>
+  );
+};
 
-      </div>
-
-      
-    </div>
-  )
-}
-
-export default App
+export default App;
