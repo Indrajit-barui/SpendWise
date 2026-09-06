@@ -33,7 +33,7 @@ const ReacentIncome = () => {
   },
 ];
   return (
-     <section className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
+     <section className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] px-2">
         {/* header */}
  <div className="flex justify-between px-5 py-4">
         <p className="font-medium text-xl">Recent Income</p>
@@ -42,7 +42,7 @@ const ReacentIncome = () => {
         </div>
 
         {/* Table header */}
-        <div className=" hidden lg:grid grid-cols-5 items-center  h-10 border bg-gray-400 text-sm px-4 py-3 ">
+        <div className=" hidden xl:grid grid-cols-5 items-center  h-10 border bg-gray-400 text-sm px-4 py-3 ">
             <p>Source</p>
             <p>Amount</p>
             <p>Date</p>
@@ -131,6 +131,10 @@ const ReacentIncome = () => {
         </div>
 
         {/* Total Income */}
+        <div className="flex justify-between h-13 items-center mt-2 border px-5 bg-green-200 text-green-900 font-bold rounded-xl ">
+            <p>Total Income</p>
+            <p className="flex items-center">  <i class="fa-solid fa-indian-rupee-sign"></i> 6500</p>
+        </div>
     </section>
   )
 }
