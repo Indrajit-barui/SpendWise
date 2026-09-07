@@ -2,6 +2,7 @@ import Stats from "../components/Stats/Stats"
 import IncomeVsExpenses from "@/components/Analytics/IncomeVsExpenses"
 import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory"
 import MonthleySpendingTrend from "@/components/Analytics/MonthleySpendingTrend"
+import CategoryWise_spending from "@/components/Analytics/CategoryWise_spending"
 const Analytics = () => {
   return (
     <section>
@@ -10,6 +11,7 @@ const Analytics = () => {
          <IncomeVsExpenses/>
          <ExpensesByCategory/>
          <MonthleySpendingTrend/>
+         <CategoryWise_spending/>
        </div>
        
     </section>

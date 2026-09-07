@@ -51,7 +51,7 @@ const MonthleySpendingTrend = () => {
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
         {/* Header */}
-                <div className="flex justify-between px-2 items-center p-2">
+        <div className="flex justify-between px-2 items-center p-2">
             <div>
              <p className="font-bold">Monthly Spending Trend</p>
              <p className="text-sm text-gray-500">Your income ,expenses and balance over time</p>
