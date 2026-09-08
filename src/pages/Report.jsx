@@ -1,6 +1,8 @@
 import { Download } from "lucide-react"
 import ReportStats from "@/components/Stats/ReportStats"
 import IncomevsExpenses from "@/components/Report/IncomevsExpenses"
+import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory"
+import RecenttransactionReport from "@/components/Report/RecenttransactionReport"
 const Report = () => {
   return (
     <div className="">
@@ -37,6 +39,8 @@ const Report = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         <IncomevsExpenses/>
+        <ExpensesByCategory/>
+        <RecenttransactionReport/>
         </div>
 
     </div>
