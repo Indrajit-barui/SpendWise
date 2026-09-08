@@ -9,6 +9,7 @@ import {
   ShoppingCart,
   Ticket,
   MoreHorizontal,
+  Info
 } from "lucide-react";
 
 const CategoriesTable = () => {
@@ -115,11 +116,94 @@ const CategoriesTable = () => {
            </div>
         </div>
 
-        {/* All Category section */}
-        <div>
-            
-        </div>
+        
+{/* All Category section */}
+<div>
+
+  {/* Table Header */}
+  <div className="grid grid-cols-7 px-2 items-center">
+    <div>#</div>
+    <div>Icon</div>
+    <div>Category Name</div>
+    <div className="text-center">Total Spent</div>
+    <div className="text-center">Transactions</div>
+    <div>Percentage</div>
+    <div className="text-center">Actions</div>
+  </div>
+
+  {/* Category Rows */}
+  {categories.map((category) => (
+    <div key={category.id} className="grid grid-cols-7 mt-2 px-2 items-center border py-1.5">
+
+      <div>{category.id}</div>
+
+      <div className={`flex h-12 w-12 items-center justify-center rounded-full ${category.bgColor} ${category.iconColor}`}>
+        {category.icon}
+
+      </div>
+
+      <div className="flex flex-col">
+        <p className="font-bold text-black">{category.name}</p>
+
+        <p className="text-sm text-gray-500">{category.description}</p>
+      </div>
+      
+      <div className="text-center">{category.amount}</div>
+
+      <div className="text-center">{category.transactions}</div>
+
+<div className="flex items-center gap-3">
+  <span>{category.percentage}</span>
+
+  <div className="h-2 w-32 rounded-full bg-gray-200">
+    <div
+      className={`${category.progressColor} h-2 rounded-full`}
+      style={{ width: category.percentage }}
+    ></div>
+  </div>
+</div>
+
+<div className="flex items-center gap-2 justify-center">
+  <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 transition hover:bg-gray-100 hover:text-indigo-600 cursor-pointer"><Pencil size={17}/></button>
+  <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-red-500 transition hover:bg-red-50 hover:bg-red-500 hover:text-white"><Trash2 size={17}/></button>
+</div>
     </div>
+  ))}
+
+</div>
+{/* Bottom Summary */}
+<div className="flex items-center gap-4 border-t border-gray-200 bg-gray-200 px-5 py-4">
+
+  {/* Info Icon */}
+  <Info size={22} className="text-blue-500" />
+
+  {/* Total Expenses */}
+  <div className="flex items-center gap-2">
+    <span className="text-gray-600">Total Expenses:</span>
+    <span className="font-semibold">₹ 2,500</span>
+  </div>
+
+  {/* Separator */}
+  <div className="h-5 w-px bg-gray-300"></div>
+
+  {/* Categories */}
+  <div className="flex items-center gap-2">
+    <span className="font-semibold">6</span>
+    <span className="text-gray-600">Categories</span>
+  </div>
+
+  {/* Separator */}
+  <div className="h-5 w-px bg-gray-300"></div>
+
+  {/* Transactions */}
+  <div className="flex items-center gap-2">
+    <span className="font-semibold">25</span>
+    <span className="text-gray-600">Transactions</span>
+  </div>
+
+</div>
+    </div>
+    
  )
 };
 
