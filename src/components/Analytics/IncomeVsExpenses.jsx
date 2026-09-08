@@ -69,10 +69,11 @@ const IncomeVsExpenses = () => {
       <CartesianGrid vertical={false}/>
         <Bar dataKey="income" fill="#39ab31" />
       <Bar dataKey="expenses" fill="#b7490e"/>
-    <Legend/>
+       <Legend/>
     </BarChart>
 </ResponsiveContainer>
         </div>
+        
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { Download } from "lucide-react"
 import ReportStats from "@/components/Stats/ReportStats"
+import IncomevsExpenses from "@/components/Report/IncomevsExpenses"
 const Report = () => {
   return (
     <div className="">
@@ -7,8 +8,8 @@ const Report = () => {
         {/* header */}
         <div className="flex justify-between">
           <div>
-            <p>Monthly Report</p>
-            <p>Here's your complete financial overview for Sep 2026</p>
+            <p className="font-bold text-xl">Monthly Report</p>
+            <p className="text-gray-600">Here's your complete financial overview for Sep 2026</p>
           </div>
           <div>
 
@@ -34,7 +35,9 @@ const Report = () => {
         </div>
        <ReportStats/>
       </div>
-
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+        <IncomevsExpenses/>
+        </div>
 
     </div>
   )
