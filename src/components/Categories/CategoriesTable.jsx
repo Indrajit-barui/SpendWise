@@ -97,12 +97,12 @@ const CategoriesTable = () => {
  return(
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
         {/* section Header */}
-        <div className="flex flex-col justify-between gap-3 px-3 xl:flex-row  xl:items-center ">
+        <div className="flex flex-col justify-between gap-3 px-1 xl:flex-row  xl:items-center ">
            <div className="flex flex-col xl:flex">
             <p className="text-xl font-bold">All Categories</p>
             <p className="text-gray-600">View and manage your expense categories</p>
            </div>
-           <div className="flex flex-col gap-2 xl:flex gap-3">
+           <div className="flex flex-col gap-2 xl:flex ">
              {/* search  */}
              <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2">
                 <Search size={18} className="text-gray-600"/>
@@ -110,7 +110,7 @@ const CategoriesTable = () => {
                 className="outline-none"/>
              </div>
              {/* Add category button */}
-             <button className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-white">
+             <button className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-white ">
               <Plus size={18} /> Add Category
              </button>
            </div>
@@ -134,7 +134,7 @@ const CategoriesTable = () => {
   {/* Category Rows */}
   {categories.map((category) => (
     // Desktop version
-    <div key={category.id} >
+    <div key={category.id} className="mt-2">
     <div className="hidden xl:grid grid-cols-7 mt-2 px-2 items-center border py-1.5">
 
       <div>{category.id}</div>
@@ -171,7 +171,7 @@ const CategoriesTable = () => {
 </div>
     </div>
 {/* mobile version */}
-    <div className="xl:hidden border border-gray-200 py-2 px-4 rounded-xl">
+    <div className="xl:hidden border border-gray-200 py-2 px-4 rounded-xl ">
       <div className="flex justify-between">
         {/* left part */}
         <div className="flex gap-3">
