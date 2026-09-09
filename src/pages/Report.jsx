@@ -3,6 +3,7 @@ import ReportStats from "@/components/Stats/ReportStats"
 import IncomevsExpenses from "@/components/Report/IncomevsExpenses"
 import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory"
 import RecenttransactionReport from "@/components/Report/RecenttransactionReport"
+import MonthlyInsights from "@/components/Report/MonthlyInsights"
 const Report = () => {
   return (
     <div className="">
@@ -41,6 +42,8 @@ const Report = () => {
         <IncomevsExpenses/>
         <ExpensesByCategory/>
         <RecenttransactionReport/>
+        <MonthlyInsights/>
+        
         </div>
 
     </div>

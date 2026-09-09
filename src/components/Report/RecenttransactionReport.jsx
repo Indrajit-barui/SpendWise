@@ -1,4 +1,4 @@
-import Income from "@/pages/Income";
+
 import { ArrowUp,ArrowDown } from "lucide-react";
 
 
