@@ -17,7 +17,7 @@ const Perference = () => {
         {/* Default month */}
         <div className="mt-5 flex justify-between items-center">
             <div className="flex gap-2 xl:gap-5">
-            <div className="h-12 w-12 rounded-xl bg-gray-200 flex items-center justify-center">
+            <div className="h-12 w-12 rounded-xl bg-gray-200 flex items-center justify-center shrink-0">
                 <CalendarDays size={28}/>
             </div>
             <div>
