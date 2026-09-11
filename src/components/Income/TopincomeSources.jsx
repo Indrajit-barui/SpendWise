@@ -32,7 +32,7 @@ const TopincomeSources = () => {
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-3">
 
       {/* Header */}
-      <div className="flex items-center justify-between p-2">
+      <div className="flex  flex-col gap-2  xl:flex-row xl:justify-between xl:items-center p-2">
         <div>
           <p className="font-bold">Top Income Sources</p>
           <p className="text-sm text-gray-500">
@@ -40,7 +40,7 @@ const TopincomeSources = () => {
           </p>
         </div>
 
-        <button className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm">
+        <button className="w-fit flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm">
           This Month
           <ChevronDown size={16} />
         </button>

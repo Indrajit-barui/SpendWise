@@ -23,13 +23,13 @@ const IncomeTrend = () => {
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 ">
         {/* header */}
-        <div className="flex justify-between px-2 items-center p-2">
+        <div className="flex  flex-col gap-2  xl:flex-row xl:justify-between xl:items-center p-2">
             <div>
              <p className="font-bold">Income Trend</p>
              <p className="text-sm text-gray-500">Your income overtime</p>
             </div>
             <div>
-<button className="border border-gray-200 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
+<button className="w-fit border border-gray-200 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
   Last 6 Months
   <ChevronDown size={16} />
 </button>
