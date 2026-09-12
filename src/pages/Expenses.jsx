@@ -1,6 +1,7 @@
 import ExpensesStats from "@/components/Stats/ExpensesStats"
 import ExpensesTrend from "@/components/Expenses/ExpensesTrend"
 import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory"
+import AllExpenses from "@/components/Expenses/AllExpenses"
 const Expenses = () => {
   return (
     <div>
@@ -10,6 +11,9 @@ const Expenses = () => {
               <ExpensesTrend/>
            
               <ExpensesByCategory/>
+              <div className="lg:col-span-2">
+                <AllExpenses/>
+              </div>
              
        </div>
     </div>
