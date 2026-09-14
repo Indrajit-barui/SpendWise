@@ -4,44 +4,49 @@ import {
   Pie,
   Tooltip,
   ResponsiveContainer,
-
-
-  Cell,
+  Cell
+  
 } from "recharts";
-const ExpensesByCategory = () => {
-    const categoryData = [
-  {
-    name: "Education",
-    value: 499,
-    color: "#8B5CF6",
-  },
-  {
-    name: "Shopping",
-    value: 850,
-    color: "#F59E0B",
-  },
-  {
-    name: "Food",
-    value: 320,
-    color: "#22C55E",
-  },
-  {
-    name: "Transport",
-    value: 300,
-    color: "#3B82F6",
-  },
-  {
-    name: "Entertainment",
-    value: 200,
-    color: "#EF4444",
-  },
-  {
-    name: "Others",
-    value: 331,
-    color: "#9CA3AF",
-  },
+const ExpensesByCategory = ({expenses=[]}) => {
+
+const categories=[...new Set(
+  expenses.map((expense)=> expense.category)
+)];
+const categoryData = categories.map((category) => {
+
+  const total = expenses
+    .filter((expense) => {
+      return expense.category === category;
+    })
+    .reduce((total, expense) => {
+      return total + Number(expense.amount);
+    }, 0);
+
+  return {
+    category: category,
+    amount: total,
+  };
+});
+
+
+const COLORS = [
+  "#ef4444", // red
+  "#f97316", // orange
+  "#eab308", // yellow
+  "#22c55e", // green
+  "#14b8a6", // teal
+  "#06b6d4", // cyan
+  "#3b82f6", // blue
+  "#6366f1", // indigo
+  "#8b5cf6", // violet
+  "#a855f7", // purple
+  "#ec4899", // pink
+  "#f43f5e", // rose
+  "#84cc16", // lime
+  "#64748b", // slate
+  "#78716c", // stone
 ];
-const totalExpenses=2500;
+
   return (
     <div className="w-full min-h-[300px] rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 flex flex-col">
                 {/* Header */}
@@ -63,43 +68,23 @@ const totalExpenses=2500;
          
           <ResponsiveContainer width="100%" height="100%">
         <PieChart>
-          <Pie
-    data={categoryData}
-     dataKey="value"
-    innerRadius={60}
-    outerRadius={100}
-    nameKey="name"
-          >
-           {
-            categoryData.map((item)=>(
-                <Cell
-        key={item.name}
-        fill={item.color}
-      />
-            ))
-           } 
-          </Pie>
-<text
-    x="50%"
-    y="48%"
-    textAnchor="middle"
-    dominantBaseline="middle"
-    fontSize="20"
-    fontWeight="bold"
-  >
-    ₹ 2,500
-  </text>
 
-  <text
-    x="50%"
-    y="58%"
-    textAnchor="middle"
-    dominantBaseline="middle"
-    fontSize="12"
-    fill="gray"
-  >
-    Total Expenses
-  </text>
+
+            <Pie
+            data={categoryData}
+            dataKey="amount"
+            nameKey="category"
+            
+            >
+            {
+              categoryData.map((data,index)=>(
+       <Cell
+      key={`cell-${index}`}
+      fill={COLORS[index % COLORS.length]}
+      />
+              ))
+            }
+           </Pie>
           <Tooltip />
 
           
@@ -111,21 +96,21 @@ const totalExpenses=2500;
       <div className="space-y-3 w-full 2xl:w-1/2">
         {
           categoryData.map((item)=>(
-            <div key={item.name} className="grid grid-cols-3 ">
+            <div key={item.category} className="grid grid-cols-3 ">
               {/* name */}
               <div className="flex items-center gap-1">
                   <span
                      className="h-3 w-3 rounded-sm shrink-0"
-                    style={{ backgroundColor: item.color }}
+                 
                    ></span>
 
-                   <span>{item.name}</span>
+                   <span>{item.category}</span>
                </div>
                {/* Amount */}
-              <span className="text-right"><i className="fa-solid fa-indian-rupee-sign"></i>{item.value}</span>
+              <span className="text-right"><i className="fa-solid fa-indian-rupee-sign"></i>{item.amount}</span>
               {/* percentage */}
-              <span className="text-gray-400 text-right">{((item.value/totalExpenses)*100).toFixed(1)} <i className="fa-solid fa-percent"></i></span>
-            </div>
+              {/* <span className="text-gray-400 text-right">{((item.value/totalExpenses)*100).toFixed(1)} <i className="fa-solid fa-percent"></i></span> */}
+            </div> 
           ))
         }
       </div>

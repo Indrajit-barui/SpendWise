@@ -1,4 +1,5 @@
-import {Search,
+import {
+  Search,
   Plus,
   GraduationCap,
   Ticket,
@@ -10,66 +11,103 @@ import {Search,
   ChevronRight,
   ChevronLeft,
   ChevronDown,
-  ChartNoAxesColumnIncreasing
-} from 'lucide-react'
+  ChartNoAxesColumnIncreasing,
+  Receipt,
+  CreditCard,
+  HeartPulse,
+  User,
+  House,
+  Plane,
+  Gift,
+  Wallet,
+  CircleEllipsis
+} from "lucide-react";
 
-const AllExpenses = () => {
-const expenseData = [
-  {
-    id: 1,
-    title: "Lunch",
-    category: "Food",
-    amount: "₹ 120",
-    date: "May 30, 2024",
-    notes: "College canteen",
-    icon: "food",
-  },
-  {
-    id: 2,
-    title: "Bus Ticket",
-    category: "Transport",
-    amount: "₹ 100",
-    date: "May 29, 2024",
-    notes: "To college",
-    icon: "transport",
-  },
-  {
-    id: 3,
-    title: "React Course",
-    category: "Education",
-    amount: "₹ 499",
-    date: "May 28, 2024",
-    notes: "Online course",
-    icon: "education",
-  },
-  {
-    id: 4,
-    title: "Groceries",
-    category: "Shopping",
-    amount: "₹ 850",
-    date: "May 28, 2024",
-    notes: "Monthly groceries",
-    icon: "shopping",
-  },
-  {
-    id: 5,
-    title: "Movie Ticket",
-    category: "Entertainment",
-    amount: "₹ 200",
-    date: "May 27, 2024",
-    notes: "With friends",
-    icon: "entertainment",
-  },
-];
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+
+} from "@/components/ui/dialog"
+import { useState,useEffect } from 'react';
+
+const AllExpenses = ({expenses,setExpenses}) => {
+
 
 // icon
 const expenseIcons = {
   food: Utensils,
+  groceries: ShoppingCart,
   transport: Bus,
   education: GraduationCap,
   shopping: ShoppingCart,
   entertainment: Ticket,
+  "bills & utilities": Receipt,
+  subscriptions: CreditCard,
+  health: HeartPulse,
+  "personal care": User,
+  housing: House,
+  travel: Plane,
+  gifts: Gift,
+  "debt & payments": Wallet,
+  other: CircleEllipsis,
 };
+
+const [open,setOpen]=useState(false);
+const [formData, setFormData] = useState({
+  title: "",
+  category: "Food",
+  amount: "",
+  date: "",
+  notes: "",
+});
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const response = await fetch("http://localhost:5000/expenses", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  const data = await response.json();
+
+  setExpenses((prevExpense)=>[data,...prevExpense]);
+
+  setFormData({
+    title: "",
+    category: "Food",
+    amount: "",
+    date: "",
+    notes: "",
+  });
+
+  setOpen(false);
+};
+
+// delete item
+const handleDelete=async(id)=>{
+  const response=await fetch(`http://localhost:5000/expenses/${id}`,{
+    method:"DELETE"
+  });
+  const data=await response.json();
+  console.log(data);
+  setExpenses((prevExpenses) =>
+  prevExpenses.filter((expense) => expense._id !== id)
+);
+}
+
+//total expenses
+const total_expenses=expenses.reduce((total,expense)=>{
+    return total+expense.amount
+},0)
+
+//total transaction
+const total_Transaction=expenses.length;
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 ">
         {/* header */}
@@ -82,7 +120,7 @@ const expenseIcons = {
              {/* search  */}
              <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2">
                 <Search size={18} className="text-gray-600"/>
-                <input type="text" placeholder="Search income..." 
+                <input type="text" placeholder="Search expenses..." 
                 className="outline-none"/>
              </div>
 
@@ -91,8 +129,8 @@ const expenseIcons = {
 
              </div>
              {/* Add category button */}
-             <button className="flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-white ">
-              <Plus size={18} /> Add Category
+             <button className="flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-white " onClick={()=>setOpen(true)}>
+              <Plus size={18} /> Add Expense
              </button>
            </div>
         </div>
@@ -109,20 +147,20 @@ const expenseIcons = {
 </div>
 
         <div>
-          {expenseData.slice(0,5).map((item)=>{
-            const Icon=expenseIcons[item.icon];
-           return( <div key={item.id}>
+          {expenses.slice(0,5).map((item,index)=>{
+            const Icon=expenseIcons[item.category.toLowerCase()];
+           return( <div key={item._id}>
                 {/* desktop */}
                 
                 <div className='grid grid-cols-7 py-3 border rounded-sm px-3'>
                   <div className='text-gray-500 font-medium'>
-                    {item.id}
+                    {index+1}
                   </div>
                   <div className='flex items-center gap-3'>
                       <div className='flex h-9 w-9 items-center justify-center rounded-full bg-red-100'>
                        <Icon size={18} />
                       </div>
-                    {item.source}
+                    {item.title}
                   </div>
 
                   <div className='text-center'>
@@ -130,19 +168,26 @@ const expenseIcons = {
                   </div>
 
                   <div className='text-red-600 font-medium'>
+                   
                     -{item.amount}
                   </div>
 
                   <div className='text-sm text-gray-500'>
-                    {item.date}
+                    {new Date(item.date).toLocaleDateString("en-IN", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+})}
                   </div>
 
                   <div className='text-sm text-gray-500'>
-                    {item.notes}
+                    {item.notes || "No notes"}
                   </div>
 <div className="flex items-center gap-2 justify-center">
   <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 transition hover:bg-gray-100 hover:text-indigo-600 cursor-pointer"><Pencil size={17}/></button>
-  <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-red-500 transition hover:bg-red-50 hover:bg-red-500 hover:text-white"><Trash2 size={17}/></button>
+  <button 
+   onClick={()=>handleDelete(item._id)}
+  className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-red-500 transition hover:bg-red-50 hover:bg-red-500 hover:text-white"><Trash2 size={17}/></button>
 </div>                  
                 </div>
             </div>
@@ -153,11 +198,11 @@ const expenseIcons = {
    <div className='flex gap-3 text-red-800 font-medium'>
     {/* icon */}
     <ChartNoAxesColumnIncreasing size={20}/>
-    <p>Total Expenses:₹ 2,500</p>
+    <p>Total Expenses: ₹ {total_expenses}</p>
     <div className='h-5 w-px bg-gray-700'>
 
     </div>
-    <p>12 Transactions</p>
+    <p>{total_Transaction} Transactions</p>
    </div>
 </div>
 <div className="flex flex-col gap-4 border-t px-2 py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -217,6 +262,140 @@ const expenseIcons = {
   </button>
 
 </div>
+<Dialog open={open} onOpenChange={setOpen}>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Add Expense</DialogTitle>
+      <DialogDescription>
+        Add a new expense to your account
+      </DialogDescription>
+    </DialogHeader>
+
+<form onSubmit={handleSubmit}>
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Title <span className="text-red-500">*</span>
+  </label>
+
+  <input
+    value={formData.title}
+    required
+    onChange={(e)=>setFormData({...formData,title:e.target.value})}
+    type="text"
+    placeholder="e.g. Lunch, Bus Ticket, Groceries..."
+    className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+  />
+</div>
+
+<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Category <span className="text-red-500">*</span>
+  </label>
+
+  <select className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+  required
+   value={formData.category}
+  onChange={(e)=>setFormData({...formData,category:e.target.value})}
+  >
+    <option>Food</option>
+    <option>Groceries</option>
+    <option>Transport</option>
+    <option>Education</option>
+    <option>Shopping</option>
+    <option>Entertainment</option>
+    <option>Bills & Utilities</option>
+    <option>Subscriptions</option>
+    <option>Health</option>
+    <option>Personal Care</option>
+    <option>Housing</option>
+    <option>Travel</option>
+    <option>Gifts</option>
+    <option>Debt & Payments</option>
+    <option>Other</option>
+  </select>
+</div>
+<div className="space-y-2"
+
+>
+  <label className="text-sm font-medium">
+    Amount <span className="text-red-500">*</span>
+  </label>
+
+  <div className="flex">
+    <span className="flex items-center rounded-l-lg border border-r-0 border-gray-200 px-4 text-gray-600">
+      ₹
+    </span>
+
+    <input
+      type="number"
+      
+      required
+      value={formData.amount}
+      onChange={(e)=>setFormData({...formData,amount:e.target.value})}
+      placeholder="0.00"
+      className="w-full rounded-r-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+    />
+  </div>
+</div>
+</div>
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Date <span className="text-red-500">*</span>
+  </label>
+
+  <input
+    type="date"
+  required
+  value={formData.date}
+  onChange={(e)=>setFormData({...formData,date:e.target.value})}
+    className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+  />
+</div>
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Notes <span className="text-gray-400">(optional)</span>
+  </label>
+
+  <textarea
+    rows={4}
+    maxLength={200}
+    value={formData.notes}
+    onChange={(e)=>setFormData({...formData,notes:e.target.value})}
+    placeholder="Add a note (optional)..."
+    className="w-full resize-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+  />
+  
+  <p className="text-right text-xs text-gray-400">
+    {formData.notes.length}/200
+  </p>
+</div>
+<div className="flex justify-end gap-3 border-t pt-5">
+
+  <button
+    type="button"
+    onClick={() => setOpen(false)}
+    className="rounded-lg border border-gray-200 px-6 py-3 font-medium hover:bg-gray-100"
+  >
+    Cancel
+  </button>
+
+  <button
+    type="submit"
+    className="flex items-center gap-2 rounded-lg bg-red-600 px-6 py-3 font-medium text-white hover:bg-red-700"
+  >
+    <Plus size={18} />
+    Add Expense
+  </button>
+
+</div>
+</form>
+
+
+
+
+  </DialogContent>
+</Dialog>
     </div>
   )
 }

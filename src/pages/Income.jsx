@@ -2,13 +2,25 @@ import IncomeStats from "@/components/Stats/IncomeStats"
 import AllIncome from "@/components/Income/AllIncome"
 import IncomeTrend from "@/components/Income/IncomeTrend"
 import TopincomeSources from "@/components/Income/TopincomeSources"
+import { useState,useEffect } from "react"
 const Income = () => {
+  const [income,setIncome]=useState([]);
+  useEffect(()=>{
+  fetch("http://localhost:5000/income").then((response)=> response.json())
+  .then((data)=>{
+    setIncome(data);
+  
+  })
+},[])
   return (
     <div className="">
       <IncomeStats/>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div className="lg:col-span-2">
-                  <AllIncome/> 
+                  <AllIncome 
+                  income={income}
+                  setIncome={setIncome}
+                  /> 
             </div>
             <div>
                  <IncomeTrend/>
