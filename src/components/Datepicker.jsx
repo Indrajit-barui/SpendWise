@@ -17,10 +17,12 @@ export function Datepicker() {
 
       {/* What the user clicks */}
       <PopoverTrigger asChild>
+        <div>
         <Button variant="outline">
            <i className="fa-solid fa-calendar text-sm"></i> {date.toLocaleDateString()} 
-           <i class="fa-solid fa-chevron-down texl-sm"></i>
+           <i className="fa-solid fa-chevron-down texl-sm"></i>
         </Button>
+        </div>
       </PopoverTrigger>
 
       {/* What appears after clicking */}

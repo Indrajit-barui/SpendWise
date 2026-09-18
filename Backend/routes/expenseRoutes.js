@@ -19,7 +19,24 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
+ router.put("/:id",async(req,res)=>{
+    try {
+      const expense=await Expense.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {new:true,runValidators:true}
+        
+      ) ;
+      
+      if(!expense){
+          return res.status(404).json({message:"Income not found"});
+      }
+      res.json(expense);
+    } 
+    catch (error) {
+        error.status(500).json({message:error.message})
+    }
+ })
 router.delete("/:id",async(req,res)=>{
   try {
     const expense=await Expense.findByIdAndDelete(req.params.id);

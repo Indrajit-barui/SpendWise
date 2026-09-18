@@ -26,9 +26,11 @@ const categoryData = categories.map((category) => {
     category: category,
     amount: total,
   };
-});
+}).sort((a,b)=> b.amount-a.amount);
 
-
+const totalExpenses=expenses.reduce((acc,curr)=>{
+    return acc+Number(curr.amount)
+},0)
 const COLORS = [
   "#ef4444", // red
   "#f97316", // orange
@@ -64,8 +66,16 @@ const COLORS = [
 
         </div>
         <div className="flex flex-col 2xl:flex-row items-center gap-6 2xl:gap-8 px-2 pb-5">
-        <div className="flex-1 w-full h-[200px] 2xl:w-1/2 ">
-         
+        <div className="relative flex-1 w-full h-[200px] 2xl:w-1/2 ">
+<div className="absolute inset-0  flex flex-col items-center justify-center pointer-events-none">
+  <p className="text-xl font-bold">
+    ₹ {totalExpenses.toLocaleString("en-IN")}
+  </p>
+
+  <p className="text-xs text-gray-500">
+    Total Expenses
+  </p>
+</div>
           <ResponsiveContainer width="100%" height="100%">
         <PieChart>
 
@@ -74,8 +84,8 @@ const COLORS = [
             data={categoryData}
             dataKey="amount"
             nameKey="category"
-            
-            >
+            innerRadius="60%"
+            outerRadius="90%"            >
             {
               categoryData.map((data,index)=>(
        <Cell
@@ -84,6 +94,7 @@ const COLORS = [
       />
               ))
             }
+
            </Pie>
           <Tooltip />
 
@@ -95,21 +106,22 @@ const COLORS = [
             {/* Expenses categories */}
       <div className="space-y-3 w-full 2xl:w-1/2">
         {
-          categoryData.map((item)=>(
+          categoryData.slice(0,5).map((item,index)=>(
             <div key={item.category} className="grid grid-cols-3 ">
               {/* name */}
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
+
                   <span
-                     className="h-3 w-3 rounded-sm shrink-0"
-                 
+                     className="h-3 w-3 rounded-sm shrink-0 "
+                     style={{backgroundColor:COLORS[index%COLORS.length]}}
                    ></span>
 
                    <span>{item.category}</span>
                </div>
                {/* Amount */}
               <span className="text-right"><i className="fa-solid fa-indian-rupee-sign"></i>{item.amount}</span>
-              {/* percentage */}
-              {/* <span className="text-gray-400 text-right">{((item.value/totalExpenses)*100).toFixed(1)} <i className="fa-solid fa-percent"></i></span> */}
+              {/* percentage  */}
+               <span className="text-gray-400 text-right">{((item.amount/totalExpenses)*100).toFixed(1)} <i className="fa-solid fa-percent"></i></span>
             </div> 
           ))
         }

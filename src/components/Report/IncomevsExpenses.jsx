@@ -1,16 +1,47 @@
 
 import {BarChart,XAxis,YAxis,Tooltip,Bar,ResponsiveContainer, Cell} from "recharts"
 
-const IncomevsExpenses = () => {
-    const incomeExpenseData = [
+const IncomevsExpenses = ({income,expenses}) => {
+
+const today=new Date();
+const currentMonth=today.getMonth();
+const currentYear=today.getFullYear();
+const currentmonthIncome=income.filter((item)=>{
+  const date=new Date(item.date);
+
+
+  return(
+    date.getMonth()===currentMonth &&
+    date.getFullYear()===currentYear
+  )
+
+
+}).reduce((acc,curr)=>{
+  return acc+Number(curr.amount);
+},0)
+const currentmonthExpenses=expenses.filter((item)=>{
+  const date=new Date(item.date);
+
+
+  return(
+    date.getMonth()===currentMonth &&
+    date.getFullYear()===currentYear
+  )
+
+
+}).reduce((acc,curr)=>{
+  return acc+Number(curr.amount);
+},0)
+
+    const chartData = [
   {
     name: "Income",
-    amount: 6500,
+    amount: currentmonthIncome
     
   },
   {
     name: "Expenses",
-    amount: 2500,
+    amount: currentmonthExpenses
   },
 ];
 const COLORS = ["#22c55e", "#ef4444"];
@@ -25,7 +56,7 @@ const COLORS = ["#22c55e", "#ef4444"];
         
 <div className="w-full h-[250px]">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={incomeExpenseData}>
+        <BarChart data={chartData}>
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
@@ -36,7 +67,7 @@ const COLORS = ["#22c55e", "#ef4444"];
             radius={[6, 6, 0, 0]}
           >
             {
-                incomeExpenseData.map((item,index)=>(
+                chartData.map((item,index)=>(
                     <Cell 
                        key={item.name}
                        fill={COLORS[index]}

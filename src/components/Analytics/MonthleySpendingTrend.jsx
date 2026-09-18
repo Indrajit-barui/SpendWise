@@ -9,45 +9,70 @@ import {
   Legend,
   CartesianGrid
 } from "recharts";
-const MonthleySpendingTrend = () => {
-    const monthlySpendingData = [
-  {
-    month: "Jan",
-    income: 4200,
-    expenses: 1000,
-    balance: 3000,
-  },
-  {
-    month: "Feb",
-    income: 5200,
-    expenses: 1400,
-    balance: 3700,
-  },
-  {
-    month: "Mar",
-    income: 4900,
-    expenses: 1100,
-    balance: 3300,
-  },
-  {
-    month: "Apr",
-    income: 6500,
-    expenses: 1800,
-    balance: 4700,
-  },
-  {
-    month: "May",
-    income: 6800,
-    expenses: 2100,
-    balance: 4600,
-  },
-  {
-    month: "Jun",
-    income: 6100,
-    expenses: 1900,
-    balance: 4100,
-  },
-];
+const MonthleySpendingTrend = ({income,expenses}) => {
+
+
+
+const today = new Date();
+
+const months = [];
+
+for (let i = 5; i >= 0; i--) {
+  const date = new Date(
+    today.getFullYear(),
+    today.getMonth() - i,
+    1
+  );
+
+  const month = date.toLocaleString("en-US", {
+    month: "short"
+  });
+
+  months.push(month);
+}
+
+const chartData = months.map((month) => {
+
+  // 1. Get income for this month
+  const monthlyIncome = income.filter((item) => {
+    const currentMonth = new Date(item.date).toLocaleString("en-US", {
+      month: "short"
+    });
+
+    return currentMonth === month;
+  });
+
+  // 2. Add income amounts
+  const monthlyIncomeTotal = monthlyIncome.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
+  }, 0);
+
+
+  // 3. Get expenses for this month
+  const monthlyExpenses = expenses.filter((item) => {
+    const currentMonth = new Date(item.date).toLocaleString("en-US", {
+      month: "short"
+    });
+
+    return currentMonth === month;
+  });
+
+  // 4. Add expense amounts
+  const monthlyExpensesTotal = monthlyExpenses.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
+  }, 0);
+
+  const monthlyBalance=monthlyIncomeTotal-monthlyExpensesTotal;
+
+
+  // 5. Create the object for this month
+  return {
+    month: month,
+    income: monthlyIncomeTotal,
+    expenses: monthlyExpensesTotal,
+    balance:monthlyBalance
+  };
+});
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
         {/* Header */}
@@ -69,7 +94,7 @@ const MonthleySpendingTrend = () => {
 
         <div className="h-[250px]">
             <ResponsiveContainer height="100%" width="100%">
-                <LineChart data={monthlySpendingData}>
+                <LineChart data={chartData}>
                 <XAxis dataKey="month"/>
                 <YAxis/>
                <CartesianGrid vertical={false}/>

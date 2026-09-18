@@ -5,12 +5,12 @@ import {
   FileText,
   TrendingUp
 } from "lucide-react";
-const IncomeStats = () => {
+const IncomeStats = ({TotalIncome,HighestIncome,TotalSources,AverageIncome}) => {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
         title="Total Income"
-        amount="₹ 6,500"
+        amount={TotalIncome}
         text="18% from last month"
         icon={<ArrowUp size={28} />}
 
@@ -20,7 +20,7 @@ const IncomeStats = () => {
 
       <StatCard
         title="Average Income"
-        amount="₹ 1,625"
+        amount={`${AverageIncome}`}
         text="+ +8% from last month"
         icon={<CircleDollarSign size={28} />}
         iconColor="text-indigo-700"
@@ -29,7 +29,7 @@ const IncomeStats = () => {
 
       <StatCard
         title="Total Sources"
-        amount="4"
+        amount={`${TotalSources}`}
         text="Active income sources"
         icon={<FileText size={28} />}
 
@@ -40,8 +40,8 @@ const IncomeStats = () => {
      
          <StatCard
         title="Highest Income"
-        amount="₹ 2,000"
-        text="From Freelancing"
+        amount={`₹ ${HighestIncome.amount}`}
+        text={`${HighestIncome.source}`}
         icon={<TrendingUp size={28} />}
 
         iconColor="text-green-500"

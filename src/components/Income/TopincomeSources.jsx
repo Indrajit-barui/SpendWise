@@ -1,31 +1,27 @@
 import { ChevronDown } from "lucide-react";
 
-const TopincomeSources = () => {
-  const topIncomeSources = [
-    {
-      id: 1,
-      source: "Freelancing",
-      amount: 2000,
-    },
-    {
-      id: 2,
-      source: "Parents",
-      amount: 2000,
-    },
-    {
-      id: 3,
-      source: "Scholarship",
-      amount: 1500,
-    },
-    {
-      id: 4,
-      source: "Part-time Job",
-      amount: 1000,
-    },
-  ];
+const TopincomeSources = ({income}) => {
+
+
+const TopincomeSources=
+Object.entries(
+     income.reduce((acc,item)=>{
+        if(!acc[item.source]){
+          acc[item.source]=0;
+        }
+        acc[item.source]=acc[item.source]+Number(item.amount);
+
+        return acc
+     },{})
+).map(([source,amount])=>{
+      return{
+        source,
+        amount
+      }
+     }).sort((a,b)=>b.amount-a.amount).slice(0,5)
 
   const maxIncome = Math.max(
-    ...topIncomeSources.map((item) => item.amount)
+    ...TopincomeSources.map((item) => item.amount)
   );
 
   return (
@@ -36,7 +32,7 @@ const TopincomeSources = () => {
         <div>
           <p className="font-bold">Top Income Sources</p>
           <p className="text-sm text-gray-500">
-            Your highest earning sources
+            Your top 5 highest earning sources
           </p>
         </div>
 
@@ -48,17 +44,17 @@ const TopincomeSources = () => {
 
       {/* Sources */}
       <div className="mt-2">
-        {topIncomeSources.map((item) => {
+        {TopincomeSources.map((item,index) => {
           const progress = (item.amount / maxIncome) * 100;
 
           return (
             <div
-              key={item.id}
+              key={item.source}
               className="grid grid-cols-[36px_110px_1fr_70px] items-center gap-3 border-b py-3 last:border-b-0"
             >
               {/* Rank */}
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 font-semibold">
-                {item.id}
+                {index+1}
               </div>
 
               {/* Source */}

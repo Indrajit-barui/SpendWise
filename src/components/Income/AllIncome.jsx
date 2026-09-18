@@ -446,7 +446,7 @@ const handleEdit = async (e) => {
     <DialogHeader>
       <DialogTitle>Edit Income</DialogTitle>
       <DialogDescription>
-        Add a new income to your account
+        Update our income Details
       </DialogDescription>
     </DialogHeader>
 

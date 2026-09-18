@@ -31,11 +31,11 @@ import {
   DialogTitle,
 
 } from "@/components/ui/dialog"
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 
 const AllExpenses = ({expenses,setExpenses}) => {
 
-
+const [editeopen,SetEditopen]=useState(false);
 // icon
 const expenseIcons = {
   food: Utensils,
@@ -100,7 +100,36 @@ const handleDelete=async(id)=>{
   prevExpenses.filter((expense) => expense._id !== id)
 );
 }
+const handleEdit = async (e) => {
+  e.preventDefault();
 
+  const response = await fetch(
+    `http://localhost:5000/expenses/${formData._id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        source: formData.source,
+        category: formData.category,
+        amount: formData.amount,
+        date: formData.date,
+        notes: formData.notes,
+      }),
+    }
+  );
+
+  const data = await response.json();
+
+  setExpenses((prevExpense) =>
+    prevExpense.map((expense) =>
+      expense._id === data._id ? data : expense
+    )
+  );
+
+  SetEditopen(false);
+};
 //total expenses
 const total_expenses=expenses.reduce((total,expense)=>{
     return total+expense.amount
@@ -174,16 +203,24 @@ const total_Transaction=expenses.length;
 
                   <div className='text-sm text-gray-500'>
                     {new Date(item.date).toLocaleDateString("en-IN", {
-  day: "2-digit",
-  month: "short",
-  year: "numeric",
-})}
+                       day: "2-digit",
+                       month: "short",
+                        year: "numeric",
+                     })}
                   </div>
 
                   <div className='text-sm text-gray-500'>
                     {item.notes || "No notes"}
                   </div>
-<div className="flex items-center gap-2 justify-center">
+<div 
+onClick={()=>{
+  SetEditopen(true)
+      setFormData({
+      ...item,
+      date:item.date.slice(0,10)
+    })
+}}
+className="flex items-center gap-2 justify-center">
   <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 transition hover:bg-gray-100 hover:text-indigo-600 cursor-pointer"><Pencil size={17}/></button>
   <button 
    onClick={()=>handleDelete(item._id)}
@@ -396,8 +433,143 @@ const total_Transaction=expenses.length;
 
   </DialogContent>
 </Dialog>
+<Dialog open={editeopen} onOpenChange={SetEditopen}>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Edit Expense</DialogTitle>
+      <DialogDescription>
+        Update your expense details
+      </DialogDescription>
+    </DialogHeader>
+
+<form onSubmit={handleEdit}>
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Title <span className="text-red-500">*</span>
+  </label>
+
+  <input
+    value={formData.title}
+    required
+    onChange={(e)=>setFormData({...formData,title:e.target.value})}
+    type="text"
+    placeholder="e.g. Lunch, Bus Ticket, Groceries..."
+    className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
+
+<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Category <span className="text-red-500">*</span>
+  </label>
+
+  <select className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
+  required
+   value={formData.category}
+  onChange={(e)=>setFormData({...formData,category:e.target.value})}
+  >
+    <option>Food</option>
+    <option>Groceries</option>
+    <option>Transport</option>
+    <option>Education</option>
+    <option>Shopping</option>
+    <option>Entertainment</option>
+    <option>Bills & Utilities</option>
+    <option>Subscriptions</option>
+    <option>Health</option>
+    <option>Personal Care</option>
+    <option>Housing</option>
+    <option>Travel</option>
+    <option>Gifts</option>
+    <option>Debt & Payments</option>
+    <option>Other</option>
+  </select>
+</div>
+<div className="space-y-2"
+
+>
+  <label className="text-sm font-medium">
+    Amount <span className="text-red-500">*</span>
+  </label>
+
+  <div className="flex">
+    <span className="flex items-center rounded-l-lg border border-r-0 border-gray-200 px-4 text-gray-600">
+      ₹
+    </span>
+
+    <input
+      type="number"
+      
+      required
+      value={formData.amount}
+      onChange={(e)=>setFormData({...formData,amount:e.target.value})}
+      placeholder="0.00"
+      className="w-full rounded-r-lg border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
+    />
+  </div>
+</div>
+</div>
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Date <span className="text-red-500">*</span>
+  </label>
+
+  <input
+    type="date"
+  required
+  value={formData.date}
+  onChange={(e)=>setFormData({...formData,date:e.target.value})}
+    className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
+  />
+</div>
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Notes <span className="text-gray-400">(optional)</span>
+  </label>
+
+  <textarea
+    rows={4}
+    maxLength={200}
+    value={formData.notes}
+    onChange={(e)=>setFormData({...formData,notes:e.target.value})}
+    placeholder="Add a note (optional)..."
+    className="w-full resize-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
+  />
+  
+  <p className="text-right text-xs text-gray-400">
+    {formData.notes.length}/200
+  </p>
+</div>
+<div className="flex justify-end gap-3 border-t pt-5">
+
+  <button
+    type="button"
+    onClick={() => SetEditopen(false)}
+    className="rounded-lg border border-gray-200 px-6 py-3 font-medium hover:bg-gray-100"
+  >
+    Cancel
+  </button>
+
+  <button
+    type="submit"
+    className="flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-medium text-white hover:bg-blue-700"
+  >
+    <Pencil size={18} />
+    Update Expense
+  </button>
+
+</div>
+</form>
+
+
+
+
+  </DialogContent>
+</Dialog>
     </div>
   )
 }
 
 export default AllExpenses
+

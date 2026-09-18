@@ -7,6 +7,7 @@ import {
   FileText,
   Settings,
   X,
+  CalendarPlus
 } from "lucide-react"
 import { useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
@@ -103,7 +104,14 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
               navigate("/Analytics")
           }}
         />
-
+        <NavItem
+          icon={<CalendarPlus size={20} className="text-purple-500"/>}
+          text="Budget & Goals"
+          active={activeItem==="Budget_goals"}
+          onClick={()=>{setActiveItem("Budget_goals")
+            navigate("/Budget_goals")
+          }}
+        />
         <NavItem
           icon={<Tags size={20} className="text-orange-500"/>}
           text="Categories"

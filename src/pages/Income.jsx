@@ -2,19 +2,31 @@ import IncomeStats from "@/components/Stats/IncomeStats"
 import AllIncome from "@/components/Income/AllIncome"
 import IncomeTrend from "@/components/Income/IncomeTrend"
 import TopincomeSources from "@/components/Income/TopincomeSources"
-import { useState,useEffect } from "react"
-const Income = () => {
-  const [income,setIncome]=useState([]);
-  useEffect(()=>{
-  fetch("http://localhost:5000/income").then((response)=> response.json())
-  .then((data)=>{
-    setIncome(data);
-  
+
+const Income = ({income,setIncome}) => {
+
+const TotalIncome=income.reduce((acc,curr)=>{
+  return acc+Number(curr.amount);
+},0)
+
+const HighestIncome=income.reduce((highest,curr)=>{
+  return Number(curr.amount)>Number(highest.amount)?curr:highest
+},{amount:0})
+
+const TotalSources=new Set(
+  income.map((item)=>{
+    return item.source;
   })
-},[])
+).size
+
+const AverageIncome=income.length>0?(TotalIncome/income.length).toFixed(2):0;
   return (
     <div className="">
-      <IncomeStats/>
+      <IncomeStats TotalIncome={TotalIncome}
+      HighestIncome={HighestIncome}
+      TotalSources={TotalSources}
+      AverageIncome={AverageIncome}
+      />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div className="lg:col-span-2">
                   <AllIncome 
@@ -23,10 +35,10 @@ const Income = () => {
                   /> 
             </div>
             <div>
-                 <IncomeTrend/>
+                 <IncomeTrend income={income}/>
             </div>
             <div>
-              <TopincomeSources/>
+              <TopincomeSources income={income}/>
             </div>
                
         </div>

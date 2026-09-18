@@ -7,7 +7,7 @@ import {
   Lightbulb
 } from "lucide-react";
 
-const MonthlyInsights = () => {
+const MonthlyInsights = ({income,expenses}) => {
   const insightIcons = {
   income: ArrowUp,
   expense: ArrowDown,
@@ -35,29 +35,123 @@ const insightStyles = {
     bg: "bg-orange-100",
   },
 };
+
+
+const today= new Date();
+const currentMonth=today.getMonth();
+const currentYear=today.getFullYear();
+const currentMonthIncome=income.filter((item)=>{
+  const date=new Date(item.date);
+
+  return date.getMonth()===currentMonth &&
+  date.getFullYear()===currentYear
+})
+
+const currentMonthtotaincome=currentMonthIncome.reduce((acc,curr)=>{
+  return acc+Number(curr.amount);
+}, 0)
+
+// previous month:
+
+const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+const previousMonthIncome = income.filter((item) => {
+  const date = new Date(item.date);
+
+  return (
+    date.getMonth() === previousMonth &&
+    date.getFullYear() === previousYear
+  );
+});
+
+const previousMonthIncomeTotal = previousMonthIncome.reduce((acc, curr) => {
+  return acc + Number(curr.amount);
+}, 0);
+
+
+// difference
+
+const totalIncomeDiff=currentMonthtotaincome-previousMonthIncomeTotal;
+
+
+const currentMonthExpenses=expenses.filter((item)=>{
+  const date=new Date(item.date);
+
+  return date.getMonth()===currentMonth &&
+  date.getFullYear()===currentYear
+})
+
+const previousMonthExpense = income.filter((item) => {
+  const date = new Date(item.date);
+
+  return (
+    date.getMonth() === previousMonth &&
+    date.getFullYear() === previousYear
+  );
+});
+
+const currentMonthtotaExpenses=currentMonthExpenses.reduce((acc,curr)=>{
+  return acc+Number(curr.amount);
+}, 0)
+
+const previousMonthExpenseTotal = previousMonthExpense.reduce((acc, curr) => {
+  return acc + Number(curr.amount);
+}, 0);
+
+const totalExpenseDiff=currentMonthtotaExpenses-previousMonthExpenseTotal;
+
+const incomePercentage =
+  previousMonthIncomeTotal > 0
+    ? Math.abs(totalIncomeDiff / previousMonthIncomeTotal) * 100
+    : 0;
+
+const expensesPercentage =
+  previousMonthExpense > 0
+    ? Math.abs(totalExpenseDiff / previousMonthExpense) * 100
+    : 0;
+// highest expenses
+const Highestexpense=expenses.reduce((highest,curr)=>{
+  return curr.amount> highest.amount?curr:highest
+},{amount:0})
+
+
+const toatalIncomeTransaction=income.length;
+const totalExpenseTranasction=expenses.length;
+
+const incomeChange =
+  totalIncomeDiff >= 0 ? "increased" : "decreased";
+const expenseChange =
+  totalExpenseDiff >= 0 ? "increased" : "decreased";
+  const savedAmount =
+  currentMonthtotaincome - currentMonthtotaExpenses;
+
+const savedPercentage =
+  currentMonthtotaincome > 0
+    ? (savedAmount / currentMonthtotaincome) * 100
+    : 0;
 const insights = [
   {
     id:1,
-    title: "Your income increased by 18%",
-    description: "You earned ₹ 1,000 more than last month.",
+    title: `Your income ${incomeChange} by ${incomePercentage.toFixed(1)}%`,
+    description: `You earned ₹ ${totalIncomeDiff} more than last month.`,
     type: "income",
   },
   {
     id:2,
-    title: "Your expenses increased by 8%",
-    description: "You spent ₹ 200 more than last month.",
+    title: `Your expenses ${expenseChange} by ${expensesPercentage.toFixed(1)}%`,
+    description: `You spent ₹ ${totalExpenseDiff} more than last month.`,
     type: "expense",
   },
   {
     id:3,
-    title: "Education is your highest expense category",
-    description: "You spent ₹ 499 (19.9%) on education.",
+    title: `${Highestexpense.category} is your highest expense category`,
+    description: `You spent ₹ ${Highestexpense.amount} (19.9%) on education.`,
     type: "education",
   },
   {
     id:4,
-    title: "You had 25 transactions",
-    description: "10 income transactions and 15 expense transactions.",
+    title: `You had ${totalExpenseTranasction+toatalIncomeTransaction} transactions`,
+    description: `${toatalIncomeTransaction} income transactions and ${totalExpenseTranasction} expense transactions.`,
     type: "transactions",
   },
 ];
@@ -105,7 +199,8 @@ const insights = [
          <Lightbulb size={28}/>
       </div>
       <div className="">
-          <p className="text-indigo-700">Great Job ! you saved 61.1 % of your income this month</p>
+          <p className="text-indigo-700">{`Great Job ! you saved ${savedAmount}  this month`}</p>
+          <p className="text-indigo-700">{`Great Job ! you saved ${savedPercentage.toFixed(1)} % of your income this month`}</p>
           <p className="text-sm text-gray-500">keep tracking to build better financial habits</p>
       </div>
     </div>

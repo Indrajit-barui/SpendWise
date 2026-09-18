@@ -21,16 +21,27 @@ const ExpensesTrend = ({expenses}) => {
 //   { month: "May", expenses: 1800 },
 //   { month: "Jun", expenses: 2400 },
 // ];
-const expenseTrendData = expenses.map((expense) => {
-const date = new Date(expense.date);
+    const incomeTrendData = 
+    Object.entries(
+      expenses.reduce((acc,item)=>{
+        const month=new Date(item.date).toLocaleString("en-US",{
+          month:"short"
+        });
 
-  return {
-    month: date.toLocaleString("en-IN", {
-      month: "short",
-    }),
-    expenses: expense.amount,
-  };
-});
+        if(!acc[month]){
+          acc[month]=0;
+        }
+        acc[month]=acc[month]+Number(item.amount);
+
+        return acc;
+      },{})
+    ).map(([month,amount])=>{
+     return{
+      month,
+      expenses:amount
+     }
+    })
+
 return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 ">
                 <div className="flex  flex-col gap-2  xl:flex-row xl:justify-between xl:items-center p-2">
@@ -49,7 +60,7 @@ return (
         
                 <div className="h-[250px]">
                     <ResponsiveContainer height="100%" width="100%">
-                        <ComposedChart data={expenseTrendData}>
+                        <ComposedChart data={incomeTrendData}>
                         <XAxis dataKey="month"/>
                         <YAxis/>
                        <CartesianGrid vertical={false}/>

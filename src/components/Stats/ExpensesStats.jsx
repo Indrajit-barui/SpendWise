@@ -5,13 +5,13 @@ import {
   ReceiptText,
   Flame
 } from "lucide-react";
-const ExpensesStats = () => {
+const ExpensesStats = ({Totalexpense,Highestexpense,TotalTransactions,AverageExpense}) => {
   return (
        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
 
       <StatCard
         title="Total Expenses"
-        amount="₹ 2,500"
+        amount={`₹ ${Totalexpense}`}
         text="8% from last month"
         icon={<ArrowDown size={28} />}
 
@@ -21,7 +21,7 @@ const ExpensesStats = () => {
 
       <StatCard
         title="Average Expense"
-        amount="₹ 417"
+        amount={`₹ ${AverageExpense} `}
         text="8% from last month"
         icon={<ShoppingCart size={28} />}
         iconColor="text-orange-700"
@@ -30,7 +30,7 @@ const ExpensesStats = () => {
 
       <StatCard
         title="Total Transaction"
-        amount="12"
+        amount={`${TotalTransactions}`}
         text="This month"
         icon={<ReceiptText size={28} />}
 
@@ -41,8 +41,8 @@ const ExpensesStats = () => {
      
          <StatCard
         title="Highest Expense"
-        amount="₹ 850"
-        text="In Shopping"
+        amount= {`₹ ${Highestexpense.amount}`}
+        text={`${Highestexpense.category}`}
         icon={<  Flame size={28} />}
 
         iconColor="text-red-700"

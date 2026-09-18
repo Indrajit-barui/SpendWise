@@ -1,0 +1,41 @@
+import herober1 from "../../../assets/images/herober1.jpeg"
+import herober2 from "../../../assets/images/herober2.jpeg"
+import { Plus ,Quote} from "lucide-react"
+const Hero = () => {
+  return (
+    <section className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] ">
+        <div className="flex  justify-between items-center h-[350px] px-6">
+        <div className=" w-[25%] h-full">
+          <img src={herober1} alt="" srcset=""  className="w-full h-full object-cover"/>
+        </div>
+        <div className="flex flex-col items-center text-center w-[50%]">
+            <div>
+            <p className="text-3xl font-bold text-gray-900">Start Planning Your Future</p>
+            </div>
+            <div className="mt-3">
+            <p className="text-gray-600 leading-7">You haven't created a budget or any financial goals yet. <br /> Set a budget to control your spending and create goals to track <br /> what you're saving for.</p>
+            </div>
+      <div className="flex gap-3 mt-6">
+  <button className="flex flex-row  gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium">
+    <Plus/> Create Your First Budget
+  </button>
+
+  <button className="border border-purple-300 text-purple-600 px-6 py-3 rounded-lg font-medium">
+    🎯 Create a Goal
+  </button>
+</div>
+<div className="flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-purple-50 text-purple-600 text-sm italic">
+  <Quote size={18} />
+  <span>A small plan today leads to big dreams tomorrow.</span>
+</div>
+        </div>
+        <div className="w-[25%] h-full ">
+          <img src={herober2} alt="" srcset="" className="w-full h-full object-cover"/>
+        </div>
+        </div>
+
+    </section>
+  )
+}
+
+export default Hero

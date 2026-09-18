@@ -9,39 +9,74 @@ import {
   CartesianGrid ,
   Legend
 } from "recharts";
+import { useContext } from "react";
+import { Context } from "@/App";
 const IncomeVsExpenses = () => {
-    const data = [
-  {
-    month: "Jan",
-    income: 4200,
-    expenses: 2100,
-  },
-  {
-    month: "Feb",
-    income: 5100,
-    expenses: 2800,
-  },
-  {
-    month: "Mar",
-    income: 4800,
-    expenses: 2300,
-  },
-  {
-    month: "Apr",
-    income: 6200,
-    expenses: 3100,
-  },
-  {
-    month: "May",
-    income: 6500,
-    expenses: 2500,
-  },
-  {
-    month: "Jun",
-    income: 5900,
-    expenses: 2600,
-  },
-];
+
+  const {expenses,income}=useContext(Context);
+
+
+const today = new Date();
+
+const months = [];
+
+for (let i = 5; i >= 0; i--) {
+  const date = new Date(
+    today.getFullYear(),
+    today.getMonth() - i,
+    1
+  );
+
+  const month = date.toLocaleString("en-US", {
+    month: "short"
+  });
+
+  months.push(month);
+}
+
+
+
+const chartData = months.map((month) => {
+
+  // 1. Get income for this month
+  const monthlyIncome = income.filter((item) => {
+    const currentMonth = new Date(item.date).toLocaleString("en-US", {
+      month: "short"
+    });
+
+    return currentMonth === month;
+  });
+
+  // 2. Add income amounts
+  const monthlyIncomeTotal = monthlyIncome.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
+  }, 0);
+
+
+  // 3. Get expenses for this month
+  const monthlyExpenses = expenses.filter((item) => {
+    const currentMonth = new Date(item.date).toLocaleString("en-US", {
+      month: "short"
+    });
+
+    return currentMonth === month;
+  });
+
+  // 4. Add expense amounts
+  const monthlyExpensesTotal = monthlyExpenses.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
+  }, 0);
+
+
+  // 5. Create the object for this month
+  return {
+    month: month,
+    income: monthlyIncomeTotal,
+    expenses: monthlyExpensesTotal
+  };
+});
+
+
   return (
     <div className="w-full min-h-[300px] rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 flex flex-col">
         {/* Header */}
@@ -62,7 +97,7 @@ const IncomeVsExpenses = () => {
         {/* Chart */}
         <div className="flex-1 min-h-[250px]">
 <ResponsiveContainer width="100%" height="100%">
-   <BarChart  data={data}>
+   <BarChart  data={chartData}>
       <XAxis dataKey="month" />
       <YAxis />
       <Tooltip />

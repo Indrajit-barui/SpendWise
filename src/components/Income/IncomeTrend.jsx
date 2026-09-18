@@ -11,15 +11,28 @@ import {
   Area,
   CartesianGrid
 } from "recharts";
-const IncomeTrend = () => {
-    const incomeTrendData = [
-  { month: "Jan", income: 1700 },
-  { month: "Feb", income: 2400 },
-  { month: "Mar", income: 2700 },
-  { month: "Apr", income: 3600 },
-  { month: "May", income: 2600 },
-  { month: "Jun", income: 3300 },
-];
+const IncomeTrend = ({income}) => {
+    const incomeTrendData = 
+    Object.entries(
+      income.reduce((acc,item)=>{
+        const month=new Date(item.date).toLocaleString("en-US",{
+          month:"short"
+        });
+
+        if(!acc[month]){
+          acc[month]=0;
+        }
+        acc[month]=acc[month]+Number(item.amount);
+
+        return acc;
+      },{})
+    ).map(([month,amount])=>{
+     return{
+      month,
+      income:amount
+     }
+    })
+
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 ">
         {/* header */}

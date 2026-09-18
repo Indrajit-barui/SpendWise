@@ -4,7 +4,10 @@ import IncomevsExpenses from "@/components/Report/IncomevsExpenses"
 import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory"
 import RecenttransactionReport from "@/components/Report/RecenttransactionReport"
 import MonthlyInsights from "@/components/Report/MonthlyInsights"
+import { useContext } from "react"
+import { Context } from "@/App"
 const Report = () => {
+  const {expenses,income}=useContext(Context);
   return (
     <div className="">
       <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2">
@@ -39,10 +42,10 @@ const Report = () => {
        <ReportStats/>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-        <IncomevsExpenses/>
-        <ExpensesByCategory/>
-        <RecenttransactionReport/>
-        <MonthlyInsights/>
+        <IncomevsExpenses income={income} expenses={expenses}/>
+        <ExpensesByCategory expenses={expenses}/>
+        <RecenttransactionReport income={income} expenses={expenses}/>
+        <MonthlyInsights income={income} expenses={expenses}/>
         
         </div>
 
