@@ -76,6 +76,7 @@ const COLORS = [
     Total Expenses
   </p>
 </div>
+
           <ResponsiveContainer width="100%" height="100%">
         <PieChart>
 

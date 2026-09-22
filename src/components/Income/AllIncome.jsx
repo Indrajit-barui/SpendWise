@@ -33,9 +33,12 @@ import {
   DialogTitle,
 
 } from "@/components/ui/dialog"
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 const AllIncome = ({income,setIncome}) => {
+const [search, setSearch] = useState("");
+const [currentPage, setCurrentPage] = useState(1);
+
 const incomeIcons = {
   "salary": BriefcaseBusiness,
   "part-time job": Laptop,
@@ -135,8 +138,34 @@ const handleEdit = async (e) => {
   SetEditopen(false);
 };
 
-// icon
+const filteredIncome = income.filter((item) => {
+  return item.category.toLowerCase().includes(search.trim().toLowerCase());
+});
 
+const itemsPerPage = 5;
+const totalPages = Math.ceil(filteredIncome.length / itemsPerPage);
+
+const pageNumbers = [];
+
+for (let i = 1; i <= totalPages; i++) {
+  pageNumbers.push(i);
+}
+
+const startIndex = (currentPage - 1) * itemsPerPage;
+const startEntry = filteredIncome.length === 0 ? 0 : startIndex + 1;
+const endEntry = Math.min(
+  startIndex + itemsPerPage,
+  filteredIncome.length
+);
+useEffect(() => {
+  if (currentPage > totalPages && totalPages > 0) {
+    setCurrentPage(1);
+  }
+}, [currentPage, totalPages]);
+const currentIncome = filteredIncome.slice(
+  startIndex,
+  startIndex + itemsPerPage
+);
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 ">
         {/* header */}
@@ -147,16 +176,20 @@ const handleEdit = async (e) => {
            </div>
            <div className="flex gap-2">
              {/* search  */}
-             <div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2">
-                <Search size={18} className="text-gray-600"/>
-                <input type="text" placeholder="Search income..." 
-                className="outline-none"/>
-             </div>
+<div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2">
+  <Search size={18} className="text-gray-600" />
 
-             {/* All sources button */}
-             <div>
+  <input
+    type="text"
+    placeholder="Search income..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    className="outline-none"
+  />
+</div>
 
-             </div>
+
+
              {/* Add category button */}
              <button
              onClick={()=>{
@@ -188,7 +221,7 @@ const handleEdit = async (e) => {
 </div>
 
         <div>
-          {income.slice(0,5).map((item,index)=>{
+          {currentIncome.map((item,index)=>{
           const Icon=incomeIcons[item.category.toLowerCase()];
            return( <div key={item._id}>
                 {/* desktop */}
@@ -248,16 +281,25 @@ const handleEdit = async (e) => {
 <div className="flex flex-col gap-4 border-t px-2 py-4 sm:flex-row sm:items-center sm:justify-between">
 
   {/* Showing entries */}
-  <p className="text-sm text-gray-500">
-    Showing <span className="font-medium text-gray-700">1–5</span> of{" "}
-    <span className="font-medium text-gray-700">23</span> entries
-  </p>
+<p className="text-sm text-gray-500">
+  Showing{" "}
+  <span className="font-medium text-gray-700">
+    {startEntry}–{endEntry}
+  </span>{" "}
+  of{" "}
+  <span className="font-medium text-gray-700">
+    {filteredIncome.length}
+  </span>{" "}
+  entries
+</p>
 
   {/* Pagination */}
   <div className="flex items-center gap-2">
 
     {/* Previous */}
     <button
+    onClick={()=>setCurrentPage(currentPage-1)}
+    disabled={currentPage===1}
       className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-500"
     >
       <ChevronLeft size={16} />
@@ -265,28 +307,25 @@ const handleEdit = async (e) => {
     </button>
 
     {/* Pages */}
-    <button className="h-9 w-9 rounded-lg bg-blue-600 text-sm text-white">
-      1
-    </button>
 
-    <button className="h-9 w-9 rounded-lg border border-gray-200 text-sm">
-      2
-    </button>
-
-    <button className="h-9 w-9 rounded-lg border border-gray-200 text-sm">
-      3
-    </button>
-
-    <button className="h-9 w-9 rounded-lg border border-gray-200 text-sm">
-      4
-    </button>
-
-    <button className="h-9 w-9 rounded-lg border border-gray-200 text-sm">
-      5
-    </button>
+{pageNumbers.map((page) => (
+  <button
+    key={page}
+    onClick={() => setCurrentPage(page)}
+    className={
+      currentPage === page
+        ? "h-9 w-9 rounded-lg bg-blue-600 text-sm text-white"
+        : "h-9 w-9 rounded-lg border border-gray-200 text-sm"
+    }
+  >
+    {page}
+  </button>
+))}
 
     {/* Next */}
     <button
+     onClick={()=>setCurrentPage(currentPage+1)}
+     disabled={currentPage===totalPages}
       className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-2 text-sm"
     >
       <span className="hidden sm:block">Next</span>

@@ -6,11 +6,12 @@ import RecenttransactionReport from "@/components/Report/RecenttransactionReport
 import MonthlyInsights from "@/components/Report/MonthlyInsights"
 import { useContext } from "react"
 import { Context } from "@/App"
+import DownloadReport from "@/components/Report/DownloadReport"
 const Report = () => {
   const {expenses,income}=useContext(Context);
   return (
     <div className="">
-      <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2">
+      <div className="w-full  rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2">
         {/* header */}
         <div className="flex justify-between">
           <div>
@@ -21,6 +22,8 @@ const Report = () => {
 
 
 <button
+type="button"
+onClick={()=>DownloadReport(income,expenses)}
   className="
     flex items-center gap-2
     rounded-lg
@@ -41,13 +44,28 @@ const Report = () => {
         </div>
        <ReportStats/>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-        <IncomevsExpenses income={income} expenses={expenses}/>
-        <ExpensesByCategory expenses={expenses}/>
-        <RecenttransactionReport income={income} expenses={expenses}/>
-        <MonthlyInsights income={income} expenses={expenses}/>
-        
-        </div>
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+
+  <IncomevsExpenses
+    income={income}
+    expenses={expenses}
+  />
+
+  <ExpensesByCategory
+    expenses={expenses}
+  />
+
+  <RecenttransactionReport
+    income={income}
+    expenses={expenses}
+  />
+
+  <MonthlyInsights
+    income={income}
+    expenses={expenses}
+  />
+
+</div>
 
     </div>
   )

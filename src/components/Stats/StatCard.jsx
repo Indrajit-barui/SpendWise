@@ -1,6 +1,6 @@
 function StatCard({ lefticon,title, amount, text, icon ,iconColor,bgColor}) {
   return (
-    <div className="rounded-xl border bg-white p-3">
+    <div className={`rounded-xl border bg-white p-3`}>
 
       <div className="flex items-start justify-between">
         {

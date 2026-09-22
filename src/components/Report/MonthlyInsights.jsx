@@ -81,7 +81,7 @@ const currentMonthExpenses=expenses.filter((item)=>{
   date.getFullYear()===currentYear
 })
 
-const previousMonthExpense = income.filter((item) => {
+const previousMonthExpense = expenses.filter((item) => {
   const date = new Date(item.date);
 
   return (
@@ -156,7 +156,7 @@ const insights = [
   },
 ];
   return (
-    <div className="w-full min-h-[300px] rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 flex flex-col px-2 py-3">
+    <div className="w-full h-full rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] flex flex-col px-2 py-3">
     
     <div>
         <p className="text-xl font-bold">Monthly Insights</p>

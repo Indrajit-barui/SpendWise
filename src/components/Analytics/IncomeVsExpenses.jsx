@@ -95,7 +95,7 @@ const chartData = months.map((month) => {
         </div>
 
         {/* Chart */}
-        <div className="flex-1 min-h-[250px]">
+        <div className="h-[250px] w-full px-2 pb-2">
 <ResponsiveContainer width="100%" height="100%">
    <BarChart  data={chartData}>
       <XAxis dataKey="month" />

@@ -3,7 +3,7 @@ import {
   Wallet,
   CreditCard,
   ChartNoAxesCombined,
-  Tags,
+  
   FileText,
   Settings,
   X,
@@ -112,14 +112,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
             navigate("/Budget_goals")
           }}
         />
-        <NavItem
-          icon={<Tags size={20} className="text-orange-500"/>}
-          text="Categories"
-          active={activeItem==="Categories"}
-          onClick={()=>{setActiveItem("Categories")
-            navigate("/Category")
-          }}
-        />
+
 
         <NavItem
           icon={<FileText size={20} className="text-blue-800"/>}
