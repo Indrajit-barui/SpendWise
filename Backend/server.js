@@ -3,6 +3,8 @@ const connectDB = require("./db");
 const cors=require('cors')
 const expenseRoutes = require("./routes/expenseRoutes");
 const incomeRoutes=require("./routes/incomeRoutes")
+const BudgetRoutes=require('./routes/BudgetRoutes');
+const goalRoutes=require('./routes/goalRoutes')
 require('dotenv').config();
 const app = express();
 
@@ -10,7 +12,8 @@ app.use(express.json());
 app.use(cors());
 app.use("/expenses", expenseRoutes);
 app.use("/income",incomeRoutes);
-
+app.use("/budgets", BudgetRoutes);
+app.use("/goals",goalRoutes);
 connectDB();
 
 app.listen(process.env.PORT, () => {
