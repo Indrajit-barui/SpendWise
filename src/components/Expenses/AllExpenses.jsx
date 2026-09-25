@@ -31,9 +31,11 @@ import {
   DialogTitle,
 
 } from "@/components/ui/dialog"
-import { useState,useEffect } from 'react';
+import { useState,useEffect, useContext } from 'react';
+import { Context } from "@/Context/Context";
 
-const AllExpenses = ({expenses,setExpenses}) => {
+const AllExpenses = () => {
+const {expenses,setExpenses}=useContext(Context)
 const [search, setSearch] = useState("");
 const [currentPage, setCurrentPage] = useState(1);
 const [editeopen,SetEditopen]=useState(false);

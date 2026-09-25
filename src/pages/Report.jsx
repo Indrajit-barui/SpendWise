@@ -5,7 +5,7 @@ import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory"
 import RecenttransactionReport from "@/components/Report/RecenttransactionReport"
 import MonthlyInsights from "@/components/Report/MonthlyInsights"
 import { useContext } from "react"
-import { Context } from "@/App"
+import { Context } from "../Context/Context"
 import DownloadReport from "@/components/Report/DownloadReport"
 const Report = () => {
   const {expenses,income}=useContext(Context);

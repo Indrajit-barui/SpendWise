@@ -6,7 +6,7 @@ import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory";
 import QuickActions from "@/components/Dashboard/QuickActions";
 import RecenttransactionReport from "@/components/Report/RecenttransactionReport";
 import {useContext} from "react"
-import {Context} from "../App"
+import { Context } from "@/Context/Context";
 const Dashboard = () => {
   const{expenses,income}=useContext(Context);
 

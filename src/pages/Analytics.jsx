@@ -4,7 +4,7 @@ import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory"
 import MonthleySpendingTrend from "@/components/Analytics/MonthleySpendingTrend"
 import CategoryWise_spending from "@/components/Analytics/CategoryWise_spending"
 import { useContext } from "react"
-import { Context } from "@/App"
+import { Context } from "@/Context/Context"
 const Analytics = () => {
   const {expenses,income}=useContext(Context)
   return (

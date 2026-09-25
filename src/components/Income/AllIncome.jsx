@@ -34,8 +34,10 @@ import {
 
 } from "@/components/ui/dialog"
 import { useState,useEffect } from 'react';
-
-const AllIncome = ({income,setIncome}) => {
+import { Context } from "@/Context/Context";
+import { useContext } from "react";
+const AllIncome = () => {
+const {income,setIncome}=useContext(Context)
 const [search, setSearch] = useState("");
 const [currentPage, setCurrentPage] = useState(1);
 

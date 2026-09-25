@@ -10,7 +10,7 @@ import {
   Legend
 } from "recharts";
 import { useContext } from "react";
-import { Context } from "@/App";
+import { Context } from "@/Context/Context";
 const IncomeVsExpenses = () => {
 
   const {expenses,income}=useContext(Context);

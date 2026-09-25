@@ -1,4 +1,6 @@
+import { Context } from '@/Context/Context';
 import {ChevronDown} from 'lucide-react'
+import { useContext } from 'react';
 import {
 
   ComposedChart,
@@ -12,7 +14,7 @@ import {
   CartesianGrid
 } from "recharts";
 
-const ExpensesTrend = ({expenses}) => {
+const ExpensesTrend = () => {
 //     const expenseTrendData = [
 //   { month: "Jan", expenses: 1300 },
 //   { month: "Feb", expenses: 1900 },
@@ -21,7 +23,8 @@ const ExpensesTrend = ({expenses}) => {
 //   { month: "May", expenses: 1800 },
 //   { month: "Jun", expenses: 2400 },
 // ];
-    const incomeTrendData = 
+const {expenses}=useContext(Context)    
+const incomeTrendData = 
     Object.entries(
       expenses.reduce((acc,item)=>{
         const month=new Date(item.date).toLocaleString("en-US",{

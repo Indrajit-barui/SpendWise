@@ -2,9 +2,10 @@ import IncomeStats from "@/components/Stats/IncomeStats"
 import AllIncome from "@/components/Income/AllIncome"
 import IncomeTrend from "@/components/Income/IncomeTrend"
 import TopincomeSources from "@/components/Income/TopincomeSources"
-
-const Income = ({income,setIncome}) => {
-
+import { Context } from "@/Context/Context"
+import { useContext } from "react"
+const Income = () => {
+const {income,setIncome}=useContext(Context)
 const TotalIncome=income.reduce((acc,curr)=>{
   return acc+Number(curr.amount);
 },0)
