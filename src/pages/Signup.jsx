@@ -10,14 +10,50 @@ import {
   ChartPie,
   ShieldCheck,
 } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
+  const [formData,setFormData]=useState({
+    name:"",
+    email:"",
+    password:"",
+    confirmPassword:""
+  })
+const [confirmPasswordError, setConfirmPasswordError] = useState("");
+const [emailError, setEmailError] = useState("");
+  const handleSignup=async(e)=>{
+    e.preventDefault();
+   if (formData.password !== formData.confirmPassword) {
+    setConfirmPasswordError("Passwords do not match");
+    return;
+     }
+     setConfirmPasswordError("");
+    const response=await fetch("http://localhost:5000/auth/signup",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(
+        {
+          name:formData.name,
+          email:formData.email,
+          password:formData.password
+        }
+      )
+    })
+    const data=await response.json();
+    if(!response.ok){
+      setEmailError(data.message)
+      return;
+    }
+    
+  }
   return (
     <div className="min-h-screen w-full flex overflow-hidden">
 
-      {/* ================= LEFT SIDE ================= */}
-      <div className="relative hidden lg:block h-screen w-1/2 overflow-hidden bg-gradient-to-br from-violet-100 via-purple-50 to-indigo-100 px-8 py-6">
-
+      {/* LEFT*/}
+<div className="relative hidden lg:block h-screen w-[55%] overflow-hidden bg-gradient-to-br from-violet-100 via-purple-50 to-indigo-100 px-8 py-6 border border-red-700">
         {/* Decorative background */}
         <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-purple-300/30 blur-3xl" />
 
@@ -34,7 +70,9 @@ const Signup = () => {
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-600 text-white shadow-md">
               <WalletCards size={25} />
             </div>
-
+ <div>
+  
+ </div>
             <div>
               <p className="text-2xl font-bold text-slate-900">
                 SpendWise
@@ -172,8 +210,8 @@ const Signup = () => {
       </div>
 
 
-      {/* ================= RIGHT SIDE ================= */}
-      <div className="flex h-screen w-full items-center justify-center overflow-y-auto bg-white px-4 py-6 lg:w-1/2">
+      {/*  RIGHT*/}
+      <div className="flex h-screen w-full items-center justify-start overflow-y-auto bg-white px-4 py-6 lg:w-1/2 ">
 
         <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
 
@@ -204,7 +242,7 @@ const Signup = () => {
 
           </div>
 
-
+<form onSubmit={handleSignup}>
           {/* Name */}
           <div className="mt-5">
 
@@ -221,6 +259,10 @@ const Signup = () => {
 
               <input
                 type="text"
+                value={formData.name}
+                onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+                 }
                 placeholder="Enter your full name"
                 className="h-11 w-full rounded-lg border border-gray-300 pl-10 pr-3 text-sm outline-none transition focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
               />
@@ -246,6 +288,11 @@ const Signup = () => {
 
               <input
                 type="email"
+                value={formData.email}
+                onChange={(e) =>{
+                setFormData({ ...formData, email: e.target.value })
+                 setEmailError("")
+                 }}
                 placeholder="Enter your email address"
                 className="h-11 w-full rounded-lg border border-gray-300 pl-10 pr-3 text-sm outline-none transition focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
               />
@@ -254,7 +301,11 @@ const Signup = () => {
 
           </div>
 
-
+         {emailError && (
+  <p className="mt-1 text-sm text-red-500">
+    {emailError}
+  </p>
+)}
           {/* Password */}
           <div className="mt-4">
 
@@ -271,6 +322,10 @@ const Signup = () => {
 
               <input
                 type="password"
+                value={formData.password}
+                onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+                 }
                 placeholder="Create a password"
                 className="h-11 w-full rounded-lg border border-gray-300 pl-10 pr-10 text-sm outline-none transition focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
               />
@@ -301,6 +356,25 @@ const Signup = () => {
 
               <input
                 type="password"
+                value={formData.confirmPassword}
+onChange={(e) => {
+  const confirmPassword = e.target.value;
+
+  setFormData({
+    ...formData,
+    confirmPassword,
+  });
+
+  if (confirmPassword === "") {
+    setConfirmPasswordError("");
+  } else if (formData.password !== confirmPassword) {
+    setConfirmPasswordError("Passwords do not match");
+  } else {
+    setConfirmPasswordError("");
+  }
+}}
+
+                 
                 placeholder="Confirm your password"
                 className="h-11 w-full rounded-lg border border-gray-300 pl-10 pr-10 text-sm outline-none transition focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
               />
@@ -313,10 +387,17 @@ const Signup = () => {
             </div>
 
           </div>
-
+           {
+            confirmPasswordError && (
+              <p className="mt-1 text-sm text-red-500">{confirmPasswordError}</p>
+            )
+           }
 
           {/* Sign Up */}
-          <button className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-purple-600 font-medium text-white transition hover:bg-purple-700">
+          <button 
+          type="submit"
+         
+          className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-purple-600 font-medium text-white transition hover:bg-purple-700">
 
             Sign Up
 
@@ -324,16 +405,20 @@ const Signup = () => {
 
           </button>
 
-
+</form>
           {/* Login */}
           <p className="mt-4 text-center text-sm text-gray-600">
 
             Already have an account?{" "}
-
-            <span className="cursor-pointer font-semibold text-purple-600 hover:text-purple-700">
+           <Link 
+            to="/Login"
+            className="cursor-pointer font-semibold text-purple-600 hover:text-purple-700"
+           >
+           
+            
               Login
-            </span>
-
+            
+              </Link>
           </p>
 
         </div>

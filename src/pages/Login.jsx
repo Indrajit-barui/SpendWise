@@ -1,35 +1,71 @@
 import { Wallet,ShieldCheck ,ChartNoAxesCombined,Target,ChartPie,  Mail,
   LockKeyhole,
   Eye,
+  WalletCards,
   ArrowRight} from "lucide-react";
 
-
+import { Link } from "react-router-dom";
 const Login = () => {
   return (
     <div className="min-h-screen w-full flex overflow-hidden">
 
       {/* Left side */}
+
 <div className="relative hidden lg:flex w-1/2 h-screen overflow-hidden bg-gradient-to-br from-violet-100 via-purple-50 to-indigo-100 px-10 py-8 justify-end">
 
-<div className="w-full max-w-lg">
-        {/* header */}
-        <div className="flex gap-3 mt-12">
-        <div className="w-12 h-12 rounded-xl bg-blue-700 text-white flex items-center justify-center">
-            <Wallet size={29}/>
-        </div>
-        <div>
-            <p className="font-semibold text-xl">SpendWise</p>
-            <p className="text-gray-500">Track . plan . Save . Grow</p>
-        </div>
-        </div>
-     {/* content */}
-     <div className="mt-12 max-w-md">
-        <p className="text-5xl font-bold">
-            Take control<br />  of <span className="text-blue-700">your money</span>
-        </p>
-        <p className="text-gray-500">Track your expenses , set goals and
-            <br /> build a better financial future <br />with SpendWise</p>
-     </div>
+        {/* Decorative background */}
+        <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-purple-300/30 blur-3xl" />
+
+        <div className="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-indigo-300/30 blur-3xl" />
+
+        <div className="absolute bottom-10 right-[-50px] h-40 w-40 rounded-full bg-purple-200/40" />
+
+        {/* Content */}
+        <div className="w-full max-w-lg">
+
+          {/* Header */}
+          <div className="flex items-center gap-3">
+
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-600 text-white shadow-md">
+              <WalletCards size={25} />
+            </div>
+
+            <div>
+              <p className="text-2xl font-bold text-slate-900">
+                SpendWise
+              </p>
+
+              <p className="text-sm text-gray-500">
+                Track • Plan • Save • Grow
+              </p>
+            </div>
+
+          </div>
+
+
+          {/* Heading */}
+          <div className="mt-8">
+
+            <p className="text-4xl font-bold leading-[1.1] text-slate-900">
+              A smarter way
+              <br />
+              to manage
+              <br />
+              your money
+            </p>
+
+            <p className="mt-3 text-sm leading-5 text-gray-500">
+              Track your income, control your expenses,
+              <br />
+              set goals and build a better financial future
+              <br />
+              with SpendWise.
+            </p>
+
+          </div>
+
+
+          {/* Features */}
           <div className="mt-7 flex flex-col gap-3">
 
             {/* Track Expenses */}
@@ -112,31 +148,29 @@ const Login = () => {
             </div>
 
           </div>
-<div className="mt-10 w-fit rounded-2xl border border-white/70 bg-white/60 px-5 py-3 shadow-sm backdrop-blur-md">
-  <p className="text-sm font-semibold text-purple-700">
-    Better finances. Brighter tomorrow.
-  </p>
-
-  <p className="mt-1 text-xs text-gray-500">
-    Small steps today can make a big difference.
-  </p>
-</div>
-</div>
 
 
-<div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-purple-300/30 blur-3xl" />
+          {/* Bottom message */}
+          <div className="mt-7 w-fit rounded-2xl border border-white/70 bg-white/50 px-5 py-3 shadow-sm backdrop-blur-sm">
 
-<div className="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-indigo-300/30 blur-3xl" />
+            <p className="text-sm font-semibold text-purple-700">
+              Small steps. Big goals.
+            </p>
 
-<div className="absolute top-1/2 right-[-80px] h-52 w-52 rounded-full bg-purple-200/40" />
+            <p className="mt-1 text-xs text-gray-500">
+              A better financial future starts today.
+            </p>
 
+          </div>
 
+        </div>
       </div>
+
 
 
 {/* Right side */}
 
-<div className="flex h-screen w-full items-center justify-center bg-white px-4 py-6 lg:w-1/2">
+<div className="flex h-screen w-full items-center justify-start bg-white px-4 py-6 lg:w-1/2 lg:pl-10">
 
   <div className="w-full max-w-xl rounded-2xl border border-gray-200 bg-white px-8 py-2 shadow-sm">
 
@@ -290,13 +324,11 @@ const Login = () => {
     {/* Signup */}
     <p className="mt-8 text-center text-sm text-gray-500">
       Don't have an account?{" "}
-      <button
-   
-        type="button"
-        className="font-semibold text-purple-600 hover:text-purple-700"
-      >
+<Link to="/Signup"
+className="cursor-pointer font-semibold text-purple-600 hover:text-purple-700"
+>
         Sign Up
-      </button>
+</Link>
     </p>
 
   </div>

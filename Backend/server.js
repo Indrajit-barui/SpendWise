@@ -5,6 +5,7 @@ const expenseRoutes = require("./routes/expenseRoutes");
 const incomeRoutes=require("./routes/incomeRoutes")
 const BudgetRoutes=require('./routes/BudgetRoutes');
 const goalRoutes=require('./routes/goalRoutes')
+const authRoutes=require("./routes/authRoutes")
 require('dotenv').config();
 const app = express();
 
@@ -14,6 +15,7 @@ app.use("/expenses", expenseRoutes);
 app.use("/income",incomeRoutes);
 app.use("/budgets", BudgetRoutes);
 app.use("/goals",goalRoutes);
+app.use("/auth",authRoutes)
 connectDB();
 
 app.listen(process.env.PORT, () => {

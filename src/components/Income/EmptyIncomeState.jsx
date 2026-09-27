@@ -1,7 +1,4 @@
-import {Plus,BarChart3,PieChart,Target,TrendingUp} from "lucide-react"
-import FeatureCard from "./FeatureCard"
-import { useState,useContext } from "react";
-import { Context } from "@/Context/Context";
+import {Plus,BarChart3,PieChart,Target,TrendingUp,WalletCards} from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -10,13 +7,16 @@ import {
   DialogTitle,
 
 } from "@/components/ui/dialog"
-const EmptyState = () => {
-const {setExpenses}=useContext(Context)
-  
+import { useState } from "react"
+import FeatureCard from "../Expenses/FeatureCard"
+import { useContext } from "react"
+import { Context } from "@/Context/Context"
+const EmptyIncomeState = () => {
 const [open,setOpen]=useState(false);
+const {setIncome}=useContext(Context)
 const [formData, setFormData] = useState({
-  title: "",
-  category: "Food",
+  source: "",
+  category: "Salary",
   amount: "",
   date: "",
   notes: "",
@@ -24,7 +24,7 @@ const [formData, setFormData] = useState({
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const response = await fetch("http://localhost:5000/expenses", {
+  const response = await fetch("http://localhost:5000/income", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -34,11 +34,11 @@ const handleSubmit = async (e) => {
 
   const data = await response.json();
 
-  setExpenses((prevExpense)=>[data,...prevExpense]);
+  setIncome((prevIncome)=>[data,...prevIncome]);
 
   setFormData({
-    title: "",
-    category: "Food",
+    source: "",
+    category: "Salary",
     amount: "",
     date: "",
     notes: "",
@@ -47,34 +47,42 @@ const handleSubmit = async (e) => {
   setOpen(false);
 };
   return (
-    <div className="space-y-6">
+       <div className="space-y-6">
         <div className="min-h-[450px] rounded-xl border bg-white flex flex-col items-center justify-center text-center">
         {/* Illustration */}
         
-            <div className="mb-6">
-              <div className="relative w-28 h-28 rounded-full bg-red-50 flex items-center justify-center">
+<div className="relative mx-auto mb-6 h-40 w-40">
 
-                <div className="w-16 h-20 bg-blue-100 rounded-md rotate-12 flex flex-col justify-center gap-2 px-4">
-                  <div className="h-2 bg-blue-300 rounded" />
-                  <div className="h-2 bg-blue-300 rounded" />
-                  <div className="h-2 bg-blue-300 rounded" />
-                </div>
+  {/* Background blob */}
+  <div className="absolute inset-4 rounded-full bg-green-100" />
 
-                <div className="absolute -right-2 bottom-1 w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center">
-                  <Plus size={28} />
-                </div>
+  {/* Wallet */}
+  <div className="absolute inset-0 flex items-center justify-center">
+    <div className="flex h-24 w-28 items-center justify-center rounded-2xl bg-green-400">
+      <WalletCards
+        size={58}
+        strokeWidth={1.8}
+        className="text-white"
+      />
+    </div>
+  </div>
 
-              </div>
-            </div>
+  {/* Plus button */}
+  <div 
+
+  className="absolute bottom-3 right-2 flex h-12 w-12 items-center justify-center rounded-full bg-green-500 text-white">
+    <Plus size={28} />
+  </div>
+
+</div>
             {/* heading */}
             <div className="flex flex-col justify-center items-center ">
-                <p className="text-3xl font-semibold">No Expenses yet</p>
-                <p className="mt-2 text-gray-500">You haven't added any expenses yet. Start tracking your <br />spending to see your expenses, trends and category <br />breakdown here.</p>
+                <p className="text-3xl font-semibold">No Income yet</p>
+                <p className="mt-2 text-gray-500">You haven't added any income yet. Start tracking your <br /> income to see earinngs,trends and  here.</p>
 
                 <button 
-                type="button"
-                onClick={()=>setOpen(true)}
-                className="mt-5 flex gap-2 items-center rounded-xl  bg-red-500 px-7 py-3 text-white font-semibold hover:bg-red-600 transition"><Plus/> Add Your First Expense</button>
+                  onClick={()=>setOpen(true)}
+                className="mt-5 flex gap-2 items-center rounded-xl  bg-green-500 px-7 py-3 text-white font-semibold hover:bg-green-600 transition"><Plus/> Add Your First Expense</button>
             </div>
 
 
@@ -86,30 +94,30 @@ const handleSubmit = async (e) => {
                 <p className="text-sm text-gray-500">Stay in control of your money and build better habits</p>
                 <div className="mt-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-2">
                 <FeatureCard 
-               icon={<BarChart3 size={26} className="text-red-600"/>}
-                title="See Your Spending"
-                description="Visualize where your money goes"
-                className="bg-red-50"
-                 bg_color="bg-red-100"
-                />
-              <FeatureCard 
-               icon={<PieChart size={26} className="text-blue-600"/>}
-                title="Understand Patterns"
-                description="Find out your top expense categories"
-                className="bg-blue-50"
-                bg_color="bg-blue-100"
-                />
-                <FeatureCard 
-               icon={<Target size={26} className="text-green-600"/>}
-                title="See Better Goals"
-                description="Plan and save for what matters"
+               icon={<BarChart3 size={26} className="text-green-600"/>}
+                title="Track Your Earnings"
+                description="See all your income sources in one place"
                 className="bg-green-50"
                  bg_color="bg-green-100"
                 />
               <FeatureCard 
+               icon={<PieChart size={26} className="text-blue-600"/>}
+                title="Understand Growth"
+                description="Monitor your income trends over time"
+                className="bg-blue-50"
+                bg_color="bg-blue-100"
+                />
+                <FeatureCard 
+               icon={<Target size={26} className="text-orange-600"/>}
+                title="Plan Your Goals"
+                description="See financial goals and achieve them"
+                className="bg-orange-50"
+                 bg_color="bg-orange-100"
+                />
+              <FeatureCard 
                icon={<TrendingUp size={26} className="text-indigo-600"/>}
-                title="Build Good Habits"
-                description="Track daily and make smarter choice"
+                title="Build a Better Future"
+                description="Make smarter financial decisions"
                 className="bg-indigo-50"
                 bg_color="bg-indigo-100"
                 />
@@ -117,29 +125,28 @@ const handleSubmit = async (e) => {
 
             </div>
 
-    
 <Dialog open={open} onOpenChange={setOpen}>
   <DialogContent>
     <DialogHeader>
-      <DialogTitle>Add Expense</DialogTitle>
+      <DialogTitle>Add Income</DialogTitle>
       <DialogDescription>
-        Add a new expense to your account
+        Add a new income to your account
       </DialogDescription>
     </DialogHeader>
 
 <form onSubmit={handleSubmit}>
 <div className="space-y-2">
   <label className="text-sm font-medium">
-    Title <span className="text-red-500">*</span>
+    Source <span className="text-red-500">*</span>
   </label>
 
   <input
-    value={formData.title}
+    value={formData.source}
     required
-    onChange={(e)=>setFormData({...formData,title:e.target.value})}
+    onChange={(e)=>setFormData({...formData,source:e.target.value})}
     type="text"
-    placeholder="e.g. Lunch, Bus Ticket, Groceries..."
-    className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+    placeholder="e.g. Part-time Job,Freelancing,Scholarship..."
+    className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-green-500"
   />
 </div>
 
@@ -149,25 +156,32 @@ const handleSubmit = async (e) => {
     Category <span className="text-red-500">*</span>
   </label>
 
-  <select className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+  <select className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-green-500"
   required
    value={formData.category}
   onChange={(e)=>setFormData({...formData,category:e.target.value})}
   >
-    <option>Food</option>
-    <option>Groceries</option>
-    <option>Transport</option>
-    <option>Education</option>
-    <option>Shopping</option>
-    <option>Entertainment</option>
-    <option>Bills & Utilities</option>
-    <option>Subscriptions</option>
-    <option>Health</option>
-    <option>Personal Care</option>
-    <option>Housing</option>
-    <option>Travel</option>
+    
+
+
+
+    <option>Salary</option>
+    <option>Part-time Job</option>
+    <option>Freelance</option>
+    <option>Internship</option>
+    <option>Business</option>
+    <option>Tutoring</option>
+    <option>Content Creation</option>
+    <option>Scholarship</option>
+    <option>Parents Support</option>
+    <option>Investment</option>
+    <option>Interest</option>
+    <option>Affiliate Income</option>
     <option>Gifts</option>
-    <option>Debt & Payments</option>
+    <option >Commission</option>
+    <option>Rental Income</option>
+    <option >Cashback</option>
+    <option>Refund</option>
     <option>Other</option>
   </select>
 </div>
@@ -190,7 +204,7 @@ const handleSubmit = async (e) => {
       value={formData.amount}
       onChange={(e)=>setFormData({...formData,amount:e.target.value})}
       placeholder="0.00"
-      className="w-full rounded-r-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+      className="w-full rounded-r-lg border border-gray-200 px-4 py-3 outline-none focus:border-green-500"
     />
   </div>
 </div>
@@ -205,7 +219,7 @@ const handleSubmit = async (e) => {
   required
   value={formData.date}
   onChange={(e)=>setFormData({...formData,date:e.target.value})}
-    className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+    className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-green-500"
   />
 </div>
 <div className="space-y-2">
@@ -219,7 +233,7 @@ const handleSubmit = async (e) => {
     value={formData.notes}
     onChange={(e)=>setFormData({...formData,notes:e.target.value})}
     placeholder="Add a note (optional)..."
-    className="w-full resize-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-red-500"
+    className="w-full resize-none rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-green-500"
   />
   
   <p className="text-right text-xs text-gray-400">
@@ -238,22 +252,21 @@ const handleSubmit = async (e) => {
 
   <button
     type="submit"
-    className="flex items-center gap-2 rounded-lg bg-red-600 px-6 py-3 font-medium text-white hover:bg-red-700"
+    className="flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3 font-medium text-white hover:bg-green-700"
   >
     <Plus size={18} />
-    Add Expense
+    Add Income
   </button>
 
 </div>
 </form>
 
 
-
-
   </DialogContent>
 </Dialog>
+   
     </div>
   )
 }
 
-export default EmptyState
+export default EmptyIncomeState

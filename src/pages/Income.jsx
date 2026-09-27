@@ -2,6 +2,7 @@ import IncomeStats from "@/components/Stats/IncomeStats"
 import AllIncome from "@/components/Income/AllIncome"
 import IncomeTrend from "@/components/Income/IncomeTrend"
 import TopincomeSources from "@/components/Income/TopincomeSources"
+import EmptyIncomeState from "@/components/Income/EmptyIncomeState"
 import { Context } from "@/Context/Context"
 import { useContext } from "react"
 const Income = () => {
@@ -21,8 +22,10 @@ const TotalSources=new Set(
 ).size
 
 const AverageIncome=income.length>0?(TotalIncome/income.length).toFixed(2):0;
+const data=income.length>0;
   return (
-    <div className="">
+    
+      data ?( <div>
       <IncomeStats TotalIncome={TotalIncome}
       HighestIncome={HighestIncome}
       TotalSources={TotalSources}
@@ -43,7 +46,10 @@ const AverageIncome=income.length>0?(TotalIncome/income.length).toFixed(2):0;
             </div>
                
         </div>
-    </div>
+    </div>) : ( <EmptyIncomeState/>)
+    
+   
+
   )
 }
 
