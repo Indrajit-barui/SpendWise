@@ -5,7 +5,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useState,useEffect } from "react";
+
 const Perference = () => {
+  const [theme, setTheme] = useState("light");
+  useEffect(() => {
+  document.documentElement.classList.toggle("dark", theme === "dark");
+}, [theme]);
   return (
      <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 px-3 py-5">
       
@@ -72,17 +78,23 @@ const Perference = () => {
     type="button"
     className="flex justify-between h-10 w-40 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4  "
   >
-    <div className="flex gap-1"><Sun/>  Light</div>
-  
+    <div className="flex gap-1">
+  {theme === "light" ? <Sun /> : <Moon />}
+  {theme === "light" ? "Light" : "Dark"}
+</div>
     <ChevronDown size={16} />
   </button>
 </DropdownMenuTrigger>
 
-  <DropdownMenuContent>
-    
+<DropdownMenuContent>
+  <DropdownMenuItem onClick={() => setTheme("light")}>
+    <Sun /> Light
+  </DropdownMenuItem>
 
-    <DropdownMenuItem><Moon/>Dark</DropdownMenuItem>
-  </DropdownMenuContent>
+  <DropdownMenuItem onClick={() => setTheme("dark")}>
+    <Moon /> Dark
+  </DropdownMenuItem>
+</DropdownMenuContent>
 </DropdownMenu>
 </div>
         </div>

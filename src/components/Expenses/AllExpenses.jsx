@@ -72,7 +72,8 @@ const handleSubmit = async (e) => {
   const response = await fetch("http://localhost:5000/expenses", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+     "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(formData),
   });
@@ -94,9 +95,12 @@ const handleSubmit = async (e) => {
 
 // delete item
 const handleDelete=async(id)=>{
-  const response=await fetch(`http://localhost:5000/expenses/${id}`,{
-    method:"DELETE"
-  });
+const response = await fetch(`http://localhost:5000/expenses/${id}`, {
+  method: "DELETE",
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
   const data=await response.json();
   console.log(data);
   setExpenses((prevExpenses) =>
@@ -110,9 +114,10 @@ const handleEdit = async (e) => {
     `http://localhost:5000/expenses/${formData._id}`,
     {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    headers: {
+     "Content-Type": "application/json",
+     Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
       body: JSON.stringify({
         source: formData.title,
         category: formData.category,
@@ -142,8 +147,7 @@ const total_expenses=expenses.reduce((total,expense)=>{
 const total_Transaction=expenses.length;
 
 const filteredExpenses = expenses.filter((item) => {
-  return item.title.toLowerCase().includes(search.trim().toLowerCase());
-});
+return (item.title || "").toLowerCase().includes(search.trim().toLowerCase());});
 const itemsPerPage = 5;
 const totalPages = Math.ceil(filteredExpenses.length / itemsPerPage);
 
@@ -211,7 +215,7 @@ const currentExpenses = filteredExpenses.slice(
 
         <div>
           {currentExpenses.map((item,index)=>{
-            const Icon=expenseIcons[item.category.toLowerCase()];
+            const Icon = expenseIcons[item.category?.toLowerCase()] || CircleEllipsis;
            return( <div key={item._id}>
                 {/* desktop */}
                 

@@ -7,14 +7,24 @@ import {
   FileText,
   Settings,
   X,
-  CalendarPlus
+  CalendarPlus,
+  LogOut
 } from "lucide-react"
 import { useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
 import { useState } from "react";
+import { useContext } from "react";
+import { SettingContext } from "@/Context/Context";
 function Sidebar({ isSidebarOpen, setSidebar }) {
   const[activeItem,setActiveItem]=useState("Dashboard")
-  const navigate=useNavigate();
+ 
+  const{user}=useContext(SettingContext)
+  const navigate = useNavigate();
+
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  navigate("/login");
+};
   return (
     <aside
       className={`
@@ -71,7 +81,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
           text="Dashboard"
           active={activeItem==="Dashboard"}
           onClick={()=>{setActiveItem("Dashboard");
-            navigate("/Dashboard")
+            navigate("/dashboard")
           }}
           
         />
@@ -82,7 +92,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
           active={activeItem==="Income"}
           onClick={()=>{setActiveItem("Income")
 
-            navigate("/Income");
+            navigate("/dashboard/Income");
           }}
         />
 
@@ -91,7 +101,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
           text="Expenses"
           active={activeItem==="Expenses"}
           onClick={()=>{setActiveItem("Expenses")
-            navigate("/Expenses")
+            navigate("/dashboard/Expenses")
           }}
         />
 
@@ -101,7 +111,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
 
            active={activeItem==="Analytics"}
           onClick={()=>{setActiveItem("Analytics")
-              navigate("/Analytics")
+              navigate("/dashboard/Analytics")
           }}
         />
         <NavItem
@@ -109,7 +119,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
           text="Budget & Goals"
           active={activeItem==="Budget_goals"}
           onClick={()=>{setActiveItem("Budget_goals")
-            navigate("/Budget_goals")
+            navigate("/dashboard/Budget_goals")
           }}
         />
 
@@ -120,7 +130,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
 
            active={activeItem==="Reports"}
           onClick={()=>{setActiveItem("Reports")
-            navigate("/Report")
+            navigate("/dashboard/Report")
           }}
         />
 
@@ -129,7 +139,7 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
           text="Settings"
           active={activeItem==="Settings"}
           onClick={()=>{setActiveItem("Settings")
-            navigate("/Settings")
+            navigate("/dashboard/Settings")
           }
         }
         />
@@ -142,21 +152,31 @@ function Sidebar({ isSidebarOpen, setSidebar }) {
         <div className="flex items-center gap-3">
 
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-white">
-            S
+            {user?.name?.charAt(0).toUpperCase()}
           </div>
 
           <div>
             <p className="font-medium text-sm">
-              Student
+              {user?.name}
             </p>
 
             <p className="text-xs text-gray-500">
-              student@example.com
+              {user?.email}
             </p>
           </div>
 
         </div>
-
+<div>
+<button
+onClick={handleLogout}
+  className="flex items-center gap-3 w-full mt-4 px-3 py-2.5 rounded-lg
+             text-gray-600 hover:text-red-600 hover:bg-red-50
+             transition-colors duration-200"
+>
+  <LogOut size={19} />
+  <span className="text-sm font-medium">Logout</span>
+</button>
+</div>
       </div>
 
     </aside>

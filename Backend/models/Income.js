@@ -22,6 +22,11 @@ const incomeSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    user:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"incomeSchema",
+      required:true
+    },
 
     notes: {
       type: String,

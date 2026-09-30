@@ -2,10 +2,7 @@ import { Target,Plus,ChartNoAxesCombined } from "lucide-react"
 import { useNavigate } from "react-router-dom";
 
 
-import Analytics from "@/pages/Analytics";
-import Income from "@/pages/Income";
-import Expenses from "@/pages/Expenses";
-import Budget_goals from "@/pages/Budget_goals";
+
 const QuickActions = ({savingsPercentage}) => {
 const navigate = useNavigate();
   return (
@@ -18,7 +15,7 @@ const navigate = useNavigate();
           <div className="grid grid-cols-2 gap-2">
 <button
   type="button"
-onClick={() => navigate("/Income")}
+onClick={() => navigate("/dashboard/Income")}
   className="w-full flex items-center gap-3 rounded-xl border border-green-100 bg-green-50 px-4 py-3 text-left transition hover:border-green-200 hover:bg-green-100"
 >
   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-100">
@@ -37,7 +34,7 @@ onClick={() => navigate("/Income")}
 <button
 
   type="button"
-  onClick={() => navigate("/Budget_goals")}
+  onClick={() => navigate("/dashboard/Budget_goals")}
   className="w-full flex items-center gap-4 rounded-xl border border-purple-100 bg-purple-50 px-4 py-3 text-left transition hover:border-purple-200 hover:bg-purple-100"
 >
   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-purple-100 text-purple-600">
@@ -56,7 +53,7 @@ onClick={() => navigate("/Income")}
 
 <button
   type="button"
-    onClick={() => navigate("/Expenses")}
+    onClick={() => navigate("/dashboard/Expenses")}
   className="w-full flex items-center gap-3 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-left transition hover:border-red-200 hover:bg-red-100"
 >
   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-100">
@@ -74,7 +71,7 @@ onClick={() => navigate("/Income")}
 </button>
 <button
   type="button"
-  onClick={() => navigate("/Analytics")}
+  onClick={() => navigate("/dashboard/Analytics")}
   className="w-full flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-left transition hover:border-blue-200 hover:bg-blue-100"
 >
   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100">
@@ -113,7 +110,7 @@ onClick={() => navigate("/Income")}
   </div>
 
   <span 
-    onClick={() => navigate("/Income")}
+    onClick={() => navigate("/dashboard/Income")}
   className="text-xl text-purple-600 cursor-pointer">
     →
   </span>

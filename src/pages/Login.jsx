@@ -1,11 +1,41 @@
 import { Wallet,ShieldCheck ,ChartNoAxesCombined,Target,ChartPie,  Mail,
   LockKeyhole,
   Eye,
+  EyeOff,
   WalletCards,
   ArrowRight} from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 const Login = () => {
+  const navigate=useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword,setShowPassword]=useState(false)
+
+  const handleLogin = async (e) => {
+  e.preventDefault();
+
+  const response = await fetch("http://localhost:5000/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (response.ok) {
+    localStorage.setItem("token", data.token);
+    navigate("/dashboard");
+  } else {
+    alert(data.message);
+  }
+};
   return (
     <div className="min-h-screen w-full flex overflow-hidden">
 
@@ -199,7 +229,7 @@ const Login = () => {
     </div>
 
     {/* Form */}
-    <form className="mt-4">
+    <form className="mt-4" onSubmit={handleLogin}>
 
       {/* Email */}
       <div>
@@ -215,6 +245,8 @@ const Login = () => {
 
 <input
   type="email"
+  value={email}
+  onChange={(e)=>setEmail(e.target.value)}
   placeholder="Enter your email address"
   className="w-full rounded-xl border border-gray-300 py-3 pl-12 pr-4 text-sm md:text-base placeholder:text-xs md:placeholder:text-sm outline-none transition focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
 />
@@ -234,15 +266,20 @@ const Login = () => {
           />
 
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e)=> setPassword(e.target.value)}
             placeholder="Enter your password"
             className="w-full rounded-xl border border-gray-300 py-3 pl-12 pr-12 outline-none transition placeholder:text-xs md:placeholder:text-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
           />
 
-          <Eye
-            size={20}
-            className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
-          />
+<button
+  type="button"
+  onClick={() => setShowPassword(!showPassword)}
+  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+>
+  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+</button>
         </div>
       </div>
 
@@ -260,12 +297,13 @@ const Login = () => {
           </span>
         </label>
 
-        <button
-          type="button"
+        <Link
+          to="/forgot-password"
+
           className="text-sm font-medium text-purple-600 hover:text-purple-700"
         >
           Forgot password?
-        </button>
+        </Link>
 
       </div>
 

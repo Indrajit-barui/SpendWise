@@ -32,9 +32,10 @@ const handleSubmit = async (e) => {
 
   const response = await fetch("http://localhost:5000/income", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+headers: {
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${localStorage.getItem("token")}`,
+},
     body: JSON.stringify(formData),
   });
 
@@ -68,6 +69,7 @@ const ExpensehandleSubmit = async (e) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(formDataexpenses),
   });

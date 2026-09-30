@@ -5,10 +5,11 @@ import IncomeVsExpenses from "@/components/Analytics/IncomeVsExpenses";
 import ExpensesByCategory from "@/components/Analytics/ExpensesByCategory";
 import QuickActions from "@/components/Dashboard/QuickActions";
 import RecenttransactionReport from "@/components/Report/RecenttransactionReport";
+import EmptyDashboard from "@/components/Dashboard/EmptyDashboard";
 import {useContext} from "react"
 import { Context } from "@/Context/Context";
 const Dashboard = () => {
-  const{expenses,income}=useContext(Context);
+  const{expenses,income,isLoading}=useContext(Context);
 
 
   const totalIncome = income.reduce(
@@ -25,9 +26,18 @@ const Dashboard = () => {
 
   const savingsPercentage =
     totalIncome > 0
-      ? ((savings / totalIncome) * 100).toFixed(1)
-      : 0;
+      ? ((savings / totalIncome) * 100).toFixed(1): 0;
+          if(isLoading){
+      return (
+        <div>Loading...</div>
+      )
+    }
+    if (income.length === 0 && expenses.length === 0) {
+  return <EmptyDashboard />;
+}
   return (
+
+    
     <div className="space-y-4">
 
       {/* Hero */}

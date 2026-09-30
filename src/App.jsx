@@ -1,52 +1,74 @@
-import { useState, useEffect } from "react";
+import { useState ,useEffect,useContext} from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import FullState from "./components/Dashboard/FullState";
-import EmptyDashboard from "./components/Dashboard/EmptyDashboard";
-import { Context } from "./Context/Context";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Landing from "./pages/Landing";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-const App = () => {
-  // const [income, setIncome] = useState([]);
-  // const [expenses, setExpenses] = useState([]);
+import EmptyDashboard from "./components/Dashboard/EmptyDashboard";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import LoadingScreen from "./LoadingScreen";
+import { Context } from "./Context/Context";
+const DashboardRoute = () => {
+  const { income, expenses, isLoading } = useContext(Context);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/expenses")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setExpenses(data);
-  //     });
-  // }, []);
+  if (isLoading) {
+    return <div><LoadingScreen/></div>;
+  }
 
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/income")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setIncome(data);
-  //     });
-  // }, []);
+  if (income.length === 0 && expenses.length === 0) {
+    return <EmptyDashboard />;
+  }
 
-  // const hasFinancialData =
-  //   income.length > 0 || expenses.length > 0;
-
-return (
-  // <Context.Provider
-  //   value={{ income, setIncome, expenses, setExpenses }}
-  // >
-  //   {hasFinancialData ? <FullState /> : <EmptyDashboard />}
-  // </Context.Provider>
-
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={  <Landing />  } />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
-  </BrowserRouter>
+  return <FullState />;
+};
 
 
- 
-);
+const App = () => {        
+  const [income, setIncome] = useState([]);         
+  const [expenses, setExpenses] = useState([]);    
+  const [isLoading, setIsLoading] = useState(true);    
+useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  Promise.all([
+    fetch("http://localhost:5000/income", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => response.json()),
+
+    fetch("http://localhost:5000/expenses", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => response.json()),
+  ])
+    .then(([incomeData, expenseData]) => {
+      setIncome(incomeData);
+      setExpenses(expenseData);
+      setIsLoading(false);
+    });
+}, []);
+
+  return (   
+    <Context.Provider
+      value={{ income, setIncome, expenses, setExpenses,isLoading }}
+    >
+      <BrowserRouter>
+<Routes>
+  <Route path="/" element={<Landing />} />
+  <Route path="/signup" element={<Signup />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/dashboard/*" element={<DashboardRoute />} />
+  <Route path="/forgot-password" element={<ForgotPassword />} />
+  <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+</Routes>
+      </BrowserRouter>
+    </Context.Provider>
+  );
 };
 
 export default App;

@@ -1,12 +1,16 @@
+require('dotenv').config();
+
 const express = require("express");
 const connectDB = require("./db");
 const cors=require('cors')
+
 const expenseRoutes = require("./routes/expenseRoutes");
 const incomeRoutes=require("./routes/incomeRoutes")
 const BudgetRoutes=require('./routes/BudgetRoutes');
 const goalRoutes=require('./routes/goalRoutes')
 const authRoutes=require("./routes/authRoutes")
-require('dotenv').config();
+const { sendTestEmail } = require("./service/emailService");
+
 const app = express();
 
 app.use(express.json());

@@ -72,17 +72,19 @@ const [formData, setFormData] = useState({
 });
 const handleSubmit = async (e) => {
   e.preventDefault();
+  console.log("HANDLE SUBMIT IS RUNNING");
 
   const response = await fetch("http://localhost:5000/income", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+     "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(formData),
   });
 
   const data = await response.json();
-
+   console.log("new income from Backend",data)
   setIncome((prevIncome)=>[data,...prevIncome]);
 
   setFormData({
@@ -98,9 +100,12 @@ const handleSubmit = async (e) => {
 
 // delete item
 const handleDelete=async(id)=>{
-  const response=await fetch(`http://localhost:5000/income/${id}`,{
-    method:"DELETE"
-  });
+const response = await fetch(`http://localhost:5000/income/${id}`, {
+  method: "DELETE",
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
   const data=await response.json();
   console.log(data);
   setIncome((prevIncome) =>
@@ -116,9 +121,10 @@ const handleEdit = async (e) => {
     `http://localhost:5000/income/${formData._id}`,
     {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+headers: {
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${localStorage.getItem("token")}`,
+},
       body: JSON.stringify({
         source: formData.source,
         category: formData.category,
@@ -141,7 +147,9 @@ const handleEdit = async (e) => {
 };
 
 const filteredIncome = income.filter((item) => {
-  return item.category.toLowerCase().includes(search.trim().toLowerCase());
+  return (item.category || "")
+    .toLowerCase()
+    .includes(search.trim().toLowerCase());
 });
 
 const itemsPerPage = 5;
@@ -224,10 +232,11 @@ const currentIncome = filteredIncome.slice(
 
         <div>
           {currentIncome.map((item,index)=>{
-          const Icon=incomeIcons[item.category.toLowerCase()];
+const Icon =
+  incomeIcons[item.category?.toLowerCase()] || CircleEllipsis;
            return( <div key={item._id}>
                 {/* desktop */}
-                
+        
                 <div className='grid grid-cols-7 py-3 border rounded-sm px-3'>
                   <div className='text-gray-500 font-medium'>
                     {index+1}

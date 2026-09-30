@@ -1,49 +1,60 @@
 const express=require('express');
 const Expense=require('../models/Expense')
-
+const authMiddleware=require("../middleware/authMiddleware")
 const router=express.Router();
-router.post("/",async(req,res)=>{
+router.post("/",authMiddleware,async(req,res)=>{
     try {
-        const expense=await Expense.create(req.body);
+        const expense=await Expense.create({
+            ...req.body,
+            user:req.userId
+        });
         res.status(201).json(expense)
     } catch (error) {
         res.status(500).json({message:error.message})
     }                                    
 })
 
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware,async (req, res) => {
   try {
-    const expenses = await Expense.find();
+    const expenses = await Expense.find({
+          user:req.userId
+    });
     res.json(expenses);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
- router.put("/:id",async(req,res)=>{
+ router.put("/:id",authMiddleware,async(req,res)=>{
     try {
-      const expense=await Expense.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {new:true,runValidators:true}
-        
-      ) ;
+const expense = await Expense.findOneAndUpdate(
+    {
+        _id: req.params.id,
+        user: req.userId
+    },
+    req.body,
+    { new: true, runValidators: true }
+);
       
       if(!expense){
-          return res.status(404).json({message:"Income not found"});
+          return res.status(404).json({message:"expense not found"});
       }
       res.json(expense);
     } 
     catch (error) {
-        error.status(500).json({message:error.message})
+        res.status(500).json({message:error.message})
     }
  })
-router.delete("/:id",async(req,res)=>{
+router.delete("/:id",authMiddleware,async(req,res)=>{
   try {
-    const expense=await Expense.findByIdAndDelete(req.params.id);
-    if(!expense){
+const expense = await Expense.findOneAndDelete({
+  _id: req.params.id,
+  user: req.userId   
+  
+  })
+  if(!expense){
       return res.status(404).json({message:"Expense not found"});
     }
-    res.json({message:"Expense delete successfully"});
+    res.json({message:"Expense deleted successfully"});
   }
    catch (error) {
      res.status(500).json({message:error.message})

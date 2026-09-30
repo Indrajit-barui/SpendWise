@@ -7,22 +7,26 @@ import { Context } from "@/Context/Context"
 import { useContext } from "react"
 const Income = () => {
 const {income,setIncome}=useContext(Context)
-const TotalIncome=income.reduce((acc,curr)=>{
-  return acc+Number(curr.amount);
-},0)
+const TotalIncome = income.reduce((acc, curr) => {
+  return acc + (Number(curr.amount) || 0);
+}, 0);
 
-const HighestIncome=income.reduce((highest,curr)=>{
-  return Number(curr.amount)>Number(highest.amount)?curr:highest
-},{amount:0})
+const HighestIncome = income.reduce((highest, curr) => {
+  return (Number(curr.amount) || 0) > (Number(highest.amount) || 0)
+    ? curr
+    : highest;
+}, { amount: 0 });
 
-const TotalSources=new Set(
-  income.map((item)=>{
-    return item.source;
-  })
-).size
+const TotalSources = new Set(
+  income.map((item) => item.source)
+).size;
 
-const AverageIncome=income.length>0?(TotalIncome/income.length).toFixed(2):0;
-const data=income.length>0;
+const AverageIncome =
+  income.length > 0
+    ? (TotalIncome / income.length).toFixed(2)
+    : 0;
+const data = income.length > 0;
+
   return (
     
       data ?( <div>

@@ -12,8 +12,10 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import Dashboard from "./Dashboard";
 const Signup = () => {
+  const navigate=useNavigate();
   const [formData,setFormData]=useState({
     name:"",
     email:"",
@@ -47,7 +49,8 @@ const [emailError, setEmailError] = useState("");
       setEmailError(data.message)
       return;
     }
-    
+    localStorage.setItem("token",data.token);
+    navigate("/dashboard")
   }
   return (
     <div className="min-h-screen w-full flex overflow-hidden">

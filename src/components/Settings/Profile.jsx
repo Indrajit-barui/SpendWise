@@ -1,6 +1,9 @@
 import { Camera } from "lucide-react"
-
+import { SettingContext } from "@/Context/Context"
+import { useContext } from "react"
 const Profile = () => {
+const{user}=useContext(SettingContext)
+
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] ">
        
@@ -19,7 +22,7 @@ const Profile = () => {
     {/* Avatar */}
     <div className="relative h-28 w-28 shrink-0">
       <div className="flex h-28 w-28 items-center justify-center rounded-full bg-purple-100 text-5xl font-semibold text-purple-600">
-        S
+        {user?.name?.charAt(0).toUpperCase() || ""}
       </div>
 
       <button className="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-slate-600 text-white">
@@ -38,7 +41,7 @@ const Profile = () => {
 
         <input
           type="text"
-          value="Student"
+          value={user?.name || ""}
           className="w-full rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-indigo-500"
         />
       </div>
@@ -51,7 +54,7 @@ const Profile = () => {
 
         <input
           type="email"
-          value="student@example.com"
+          value={user?.email || ""}
           disabled
           className="w-full rounded-lg border border-gray-200 bg-gray-100 px-4 py-3 text-gray-500 outline-none"
         />

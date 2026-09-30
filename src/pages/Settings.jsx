@@ -1,13 +1,20 @@
 import Profile from "@/components/Settings/Profile"
 import Perference from "@/components/Settings/Perference"
-import Datamanagement from "@/components/Report/Datamanagement"
+import Datamanagement from "@/components/Settings/Datamanagement"
 import {WalletCards} from "lucide-react"
+
+
 const Settings = () => {
+
+
+
   return (
     <div>
+     
       <Profile/>
       <Perference/>
       <Datamanagement/>
+
       <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 px-3 py-5">
         {/* about section */}
          <div className="">

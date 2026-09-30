@@ -15,10 +15,14 @@ const userSchema = new mongoose.Schema({
     trim:true
   },
 
-  password: {
-    type: String,
-    required: true,
-  },
+password: {
+  type: String,
+  required: true
+},
+
+resetPasswordToken: String,
+
+resetPasswordExpires: Date
 });
 
 const User = mongoose.model("User", userSchema);

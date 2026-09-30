@@ -13,19 +13,24 @@ import {
 } from "lucide-react";
 
 const  Header = ({setSidebar}) => {
-  const pageIcons = {
-  Dashboard: LayoutDashboard,
-  Income: Wallet,
-  Expenses: Receipt,
-  Analytics: ChartNoAxesCombined,
-  Budget_goals: CalendarPlus,
-  Report: FileText,
-  Settings: Settings,
-};
-const location=useLocation();
-const pageName=location.pathname==="/"?"Dashboard":location.pathname.slice(1);
-const displayName=pageName==="Budget_goals"?"Budget & Goals":pageName;
-const PageIcon=pageIcons[pageName] || LayoutDashboard;
+const pageIcons = {
+    Dashboard: LayoutDashboard,
+    Income: Wallet,
+    Expenses: Receipt,
+    Analytics: ChartNoAxesCombined,
+    Budget_goals: CalendarPlus,
+    Report: FileText,
+    Settings: Settings,
+  };
+
+  const location = useLocation();
+
+  const pageName = location.pathname.split("/").pop() || "Dashboard";
+
+  const displayName =
+    pageName === "Budget_goals" ? "Budget & Goals" : pageName;
+
+  const PageIcon = pageIcons[pageName] || LayoutDashboard;
   return (
     <header className="flex items-center justify-between p-4">
       
