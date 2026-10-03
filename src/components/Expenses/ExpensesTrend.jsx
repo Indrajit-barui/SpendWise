@@ -24,26 +24,36 @@ const ExpensesTrend = () => {
 //   { month: "Jun", expenses: 2400 },
 // ];
 const {expenses}=useContext(Context)    
-const incomeTrendData = 
-    Object.entries(
-      expenses.reduce((acc,item)=>{
-        const month=new Date(item.date).toLocaleString("en-US",{
-          month:"short"
-        });
+const incomeTrendData = Array.from({ length: 6 }, (_, index) => {
+  const date = new Date();
 
-        if(!acc[month]){
-          acc[month]=0;
-        }
-        acc[month]=acc[month]+Number(item.amount);
+  date.setMonth(date.getMonth() - (5 - index));
 
-        return acc;
-      },{})
-    ).map(([month,amount])=>{
-     return{
-      month,
-      expenses:amount
-     }
-    })
+  const month = date.toLocaleString("en-US", {
+    month: "short",
+  });
+
+  const year = date.getFullYear();
+  const monthIndex = date.getMonth();
+
+  let totalExpenses = 0;
+
+  expenses.forEach((expense) => {
+    const expenseDate = new Date(expense.date);
+
+    if (
+      expenseDate.getFullYear() === year &&
+      expenseDate.getMonth() === monthIndex
+    ) {
+      totalExpenses += Number(expense.amount);
+    }
+  });
+
+  return {
+    month,
+    expenses: totalExpenses,
+  };
+});
 
 return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 ">

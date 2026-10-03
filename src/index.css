@@ -132,3 +132,13 @@
 html{
   scroll-behavior: smooth;
 }
+
+.category-chart .recharts-legend-wrapper {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .category-chart .recharts-legend-wrapper {
+    display: block !important;
+  }
+}

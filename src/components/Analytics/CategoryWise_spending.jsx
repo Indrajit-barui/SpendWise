@@ -8,70 +8,58 @@ Tooltip,
 ResponsiveContainer,
 Legend
 } from "recharts"
+import { useContext } from "react";
+import { Context } from "@/Context/Context";
 const CategoryWise_spending = () => {
-    const categoryWiseData = [
-  {
-    month: "Jan",
-    Food: 800,
-    Transport: 500,
-    Education: 400,
-    Shopping: 700,
-    Entertainment: 300,
-    Others: 200,
-  },
-  {
-    month: "Feb",
-    Food: 1000,
-    Transport: 600,
-    Education: 500,
-    Shopping: 900,
-    Entertainment: 400,
-    Others: 300,
-  },
-  {
-    month: "Mar",
-    Food: 900,
-    Transport: 700,
-    Education: 450,
-    Shopping: 800,
-    Entertainment: 350,
-    Others: 250,
-  },
-  {
-    month: "Apr",
-    Food: 1100,
-    Transport: 800,
-    Education: 600,
-    Shopping: 1000,
-    Entertainment: 500,
-    Others: 400,
-  },
-  {
-    month: "May",
-    Food: 1200,
-    Transport: 900,
-    Education: 700,
-    Shopping: 1200,
-    Entertainment: 600,
-    Others: 350,
-  },
-  {
-    month: "Jun",
-    Food: 1300,
-    Transport: 800,
-    Education: 650,
-    Shopping: 1100,
-    Entertainment: 500,
-    Others: 450,
-  },
-];
+  const {expenses}=useContext(Context)
+
+const categoryWiseData = Array.from({ length: 6 }, (_, index) => {
+  const date = new Date();
+
+  date.setMonth(date.getMonth() - (5 - index));
+
+  const month = date.toLocaleString("en-US", {
+    month: "short",
+  });
+
+  const year = date.getFullYear();
+  const monthIndex = date.getMonth();
+
+  const monthData = {
+    month,
+  };
+
+  expenses.forEach((expense) => {
+    const expenseDate = new Date(expense.date);
+
+    if (
+      expenseDate.getFullYear() === year &&
+      expenseDate.getMonth() === monthIndex
+    ) {
+      monthData[expense.category] =
+        (monthData[expense.category] || 0) +
+        Number(expense.amount);
+    }
+  });
+
+  return monthData;
+});
 const categories = [
   { name: "Food", color: "#22C55E" },
+  { name: "Groceries", color: "#F59E0B" },
   { name: "Transport", color: "#3B82F6" },
   { name: "Education", color: "#8B5CF6" },
-  { name: "Shopping", color: "#F59E0B" },
+  { name: "Shopping", color: "#EC4899" },
   { name: "Entertainment", color: "#EF4444" },
-  { name: "Others", color: "#9CA3AF" },
+  { name: "Bills & Utilities", color: "#14B8A6" },
+  { name: "Subscriptions", color: "#6366F1" },
+  { name: "Health", color: "#F43F5E" },
+  { name: "Personal Care", color: "#A855F7" },
+  { name: "Housing", color: "#64748B" },
+  { name: "Travel", color: "#0EA5E9" },
+  { name: "Gifts", color: "#E11D48" },
+  { name: "Debt & Payments", color: "#78716C" },
+  { name: "Other", color: "#9CA3AF" },
 ];
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
@@ -91,7 +79,7 @@ const categories = [
         </div>
 
         {/* chart */}
-        <div className="h-[250px]">
+        <div className="h-[250px] category-chart">
          <ResponsiveContainer height="100%" width="100%">
            <BarChart data={categoryWiseData}>
             {
@@ -111,7 +99,7 @@ const categories = [
 
             <XAxis dataKey="month"/>
             <YAxis/>
-            <Legend/>
+            <Legend className="desktop-only-legend"/>
             <Tooltip/>
            </BarChart>
 

@@ -12,26 +12,36 @@ import {
   CartesianGrid
 } from "recharts";
 const IncomeTrend = ({income}) => {
-    const incomeTrendData = 
-    Object.entries(
-      income.reduce((acc,item)=>{
-        const month=new Date(item.date).toLocaleString("en-US",{
-          month:"short"
-        });
+const incomeTrendData = Array.from({ length: 6 }, (_, index) => {
+  const date = new Date();
 
-        if(!acc[month]){
-          acc[month]=0;
-        }
-        acc[month]=acc[month]+Number(item.amount);
+  date.setMonth(date.getMonth() - (5 - index));
 
-        return acc;
-      },{})
-    ).map(([month,amount])=>{
-     return{
-      month,
-      income:amount
-     }
-    })
+  const month = date.toLocaleString("en-US", {
+    month: "short",
+  });
+
+  const year = date.getFullYear();
+  const monthIndex = date.getMonth();
+
+  let totalIncome = 0;
+
+  income.forEach((item) => {
+    const incomeDate = new Date(item.date);
+
+    if (
+      incomeDate.getFullYear() === year &&
+      incomeDate.getMonth() === monthIndex
+    ) {
+      totalIncome += Number(item.amount);
+    }
+  });
+
+  return {
+    month,
+    income: totalIncome,
+  };
+});
 
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 ">
