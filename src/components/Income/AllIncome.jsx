@@ -6,6 +6,7 @@ import {
   GraduationCap,
   Building2,
   BookOpen,
+  IndianRupee,
   Video,
   Award,
   Users,
@@ -22,7 +23,9 @@ Trash2,
 CircleEllipsis,
 ChevronDown,
 ChevronLeft,
-ChevronRight
+ChevronRight,
+FileText,
+Calendar
 } from "lucide-react";
 
 import {
@@ -179,48 +182,64 @@ const currentIncome = filteredIncome.slice(
   return (
     <div className="w-full mt-5 rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 ">
         {/* header */}
-        <div className="flex justify-between">
-           <div className="flex flex-col xl:flex">
-            <p className="text-xl font-bold">All Income</p>
-            <p className="text-gray-600">View and manage your income entries</p>
-           </div>
-           <div className="flex gap-2">
-             {/* search  */}
-<div className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2">
-  <Search size={18} className="text-gray-600" />
+<div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
 
-  <input
-    type="text"
-    placeholder="Search income..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="outline-none"
-  />
+  {/* Title */}
+  <div className="min-w-0">
+    <p className="text-xl font-bold">
+      All Income
+    </p>
+
+    <p className="text-sm text-gray-600">
+      View and manage your income entries
+    </p>
+  </div>
+
+  {/* Actions */}
+  <div className="flex w-full flex-col gap-2 sm:flex-row xl:w-auto">
+
+    {/* Search */}
+    <div className="flex w-full items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 xl:w-[280px]">
+      
+      <Search
+        size={18}
+        className="shrink-0 text-gray-600"
+      />
+
+      <input
+        type="text"
+        placeholder="Search income..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="min-w-0 w-full outline-none"
+      />
+
+    </div>
+
+    {/* Add Income */}
+    <button
+      onClick={() => {
+        setOpen(true);
+        setFormData({
+          source: "",
+          category: "Salary",
+          amount: "",
+          date: "",
+          notes: "",
+        });
+      }}
+      className="flex shrink-0 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-white"
+    >
+      <Plus size={18} />
+      Add Income
+    </button>
+
+  </div>
+
 </div>
-
-
-
-             {/* Add category button */}
-             <button
-             onClick={()=>{
-              setOpen(true)
-              setFormData({
-             source: "",
-             category: "Salary",
-             amount: "",
-             date: "",
-             notes: "",
-              })
-            }}
-
-             className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-white ">
-              <Plus size={18} /> Add Income
-             </button>
-           </div>
-        </div>
 {/* table header */}
 
-<div className='grid grid-cols-7 py-3 bg-gray-400 border mt-3 rounded-sm px-3'>
+<div className='hidden md:grid grid-cols-7 py-3 bg-gray-400 border mt-3 rounded-sm px-3'>
   <div>#</div>
   <div>Source</div>
   <div className='text-center'>Category</div>
@@ -237,7 +256,7 @@ const Icon =
            return( <div key={item._id}>
                 {/* desktop */}
         
-                <div className='grid grid-cols-7 py-3 border rounded-sm px-3'>
+                <div className='hidden md:grid grid-cols-7 py-3 border rounded-sm px-3 items-center'>
                   <div className='text-gray-500 font-medium'>
                     {index+1}
                   </div>
@@ -285,6 +304,126 @@ const Icon =
   className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-red-500 transition hover:bg-red-50 hover:bg-red-500 hover:text-white"><Trash2 size={17}/></button>
 </div>                  
                 </div>
+
+                {/* mobile */}
+
+<div className="md:hidden mt-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+
+  {/* Top section */}
+  <div className="flex items-center justify-between gap-3">
+
+    <div className="flex min-w-0 items-center gap-3">
+
+      {/* Icon */}
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600">
+        <Icon size={24} />
+      </div>
+
+      {/* Source + Category */}
+      <div className="min-w-0">
+
+        <div className="truncate font-semibold text-gray-900">
+          {item.source}
+        </div>
+
+        <span className="mt-1 inline-block rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700">
+          {item.category}
+        </span>
+
+      </div>
+
+    </div>
+
+    {/* More button */}
+    <button className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-gray-100">
+      ⋮
+    </button>
+
+  </div>
+
+
+  {/* Amount */}
+  <div className="mt-4 flex items-center gap-1 text-xl font-bold text-green-600">
+    <IndianRupee size={19} />
+    <span>
+      {Number(item.amount).toLocaleString("en-IN")}
+    </span>
+  </div>
+
+
+  {/* Date + Notes */}
+  <div className="mt-3 space-y-2">
+
+    {/* Date */}
+    <div className="flex items-center gap-2 text-sm text-gray-500">
+
+      <Calendar
+        size={17}
+        className="shrink-0"
+      />
+
+      <span>
+        {new Date(item.date).toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })}
+      </span>
+
+    </div>
+
+
+    {/* Notes */}
+    <div className="flex min-w-0 items-center gap-2 text-sm text-gray-500">
+
+      <FileText
+        size={17}
+        className="shrink-0"
+      />
+
+      <span className="truncate">
+        {item.notes || "No notes"}
+      </span>
+
+    </div>
+
+  </div>
+
+
+  {/* Divider */}
+  <div className="my-4 border-t border-gray-100" />
+
+
+  {/* Actions */}
+  <div className="flex gap-2">
+
+    <button
+      onClick={() => {
+        SetEditopen(true);
+
+        setFormData({
+          ...item,
+          date: item.date.slice(0, 10),
+        });
+      }}
+      className="flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 transition hover:bg-gray-50 hover:text-indigo-600"
+    >
+      <Pencil size={16} />
+      Edit
+    </button>
+
+
+    <button
+      onClick={() => handleDelete(item._id)}
+      className="flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-red-100 bg-red-50 text-sm font-medium text-red-500 transition hover:bg-red-500 hover:text-white"
+    >
+      <Trash2 size={16} />
+      Delete
+    </button>
+
+  </div>
+
+</div>
             </div>
 )})}
         </div>
@@ -305,7 +444,7 @@ const Icon =
 </p>
 
   {/* Pagination */}
-  <div className="flex items-center gap-2">
+  <div className="flex items-center gap-2 ">
 
     {/* Previous */}
     <button

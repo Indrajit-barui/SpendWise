@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import hero from "../../assets/images/hero.jpeg"
 const HeroSection = () => {
   return (
-<div className="relative flex justify-around min-h-[580px] items-center overflow-hidden bg-gradient-to-br from-violet-50 via-white to-purple-50 px-10">
+<div className="relative flex flex-col md:flex-row justify-around min-h-[580px] items-center overflow-hidden bg-gradient-to-br from-violet-50 via-white to-purple-50 px-6 md:px-10">
 
 <div className="absolute right-[5%] top-[-180px] h-[650px] w-[650px] rounded-full bg-purple-100 blur-2xl" />
 <div className="absolute -right-20 -top-32 h-[650px] w-[650px] rounded-full bg-purple-100/80" />
@@ -22,9 +22,9 @@ const HeroSection = () => {
         </div>
 
         {/* Heading */}
-        <h1 className="text-5xl font-bold leading-[1.1] tracking-tight text-slate-900">
+<h1 className="text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight text-slate-900">
           Manage your money,
-          <br />
+          <br className="hidden md:block"/>
           <span className="text-purple-600">
             simply and confidently.
           </span>
@@ -61,7 +61,7 @@ const HeroSection = () => {
       </div>
        
 
-       <div className="w-1/2 flex justify-center items-center z-10">
+       <div className="hidden md:w-1/2 md:flex justify-center items-center z-10">
          <img src={hero} alt="" srcset="" className="w-full max-w-2xl object-contain"/>
        </div>
     </div>

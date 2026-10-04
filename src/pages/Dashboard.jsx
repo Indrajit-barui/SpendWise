@@ -38,13 +38,13 @@ const Dashboard = () => {
   return (
 
     
-    <div className="space-y-4">
+    <div className="min-w-0 w-full space-y-4">
 
       {/* Hero */}
-<section className="w-full h-56 flex items-center rounded-xl bg-indigo-50 overflow-hidden">
+<section className="w-full h-70 md:h-56 flex items-center rounded-xl bg-indigo-50 overflow-hidden">
 
   {/* Left Image */}
-  <div className="w-[25%] h-full">
+  <div className="hidden md:block w-[25%] h-full">
     <img
       src={img1}
       alt=""
@@ -54,7 +54,7 @@ const Dashboard = () => {
 
   {/* Middle Text */}
 {/* Middle Text */}
-<div className="w-[50%] h-full flex flex-col items-center justify-center px-6 text-center">
+<div className="w-full md:w-[50%] h-full flex flex-col items-center justify-center px-6 text-center">
 
   <p className="text-sm text-gray-600">
     Good to see you again,{" "}
@@ -67,7 +67,7 @@ const Dashboard = () => {
   <h1 className="mt-2 text-3xl font-bold leading-tight text-gray-900">
     Small Steps Today,
     <br />
-    <span className="text-purple-700">
+    <span className="text-purple-700 text-xl md:text-3xl">
       A Brighter Tomorrow!
     </span>
   </h1>
@@ -87,7 +87,7 @@ const Dashboard = () => {
 </div>
 
   {/* Right Image */}
-  <div className="w-[25%] h-full">
+  <div className="hidden md:block w-[25%] h-full">
     <img
       src={img2}
       alt=""
@@ -101,25 +101,27 @@ const Dashboard = () => {
       <Stats />
 
       {/* Charts */}
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div className="grid min-w-0 grid-cols-1 lg:grid-cols-2 gap-4">
+  <div className="min-w-0">
+    <IncomeVsExpenses />
+  </div>
 
-  <IncomeVsExpenses />
-
-  <ExpensesByCategory expenses={expenses} />
-
+  <div className="min-w-0">
+    <ExpensesByCategory expenses={expenses} />
+  </div>
 </div>
 
       {/* Bottom section */}
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div className="grid min-w-0 grid-cols-1 lg:grid-cols-2 gap-4">
 
-  <div className="h-[400px]">
+  <div className="min-w-0 h-[400px]">
     <RecenttransactionReport
       income={income}
       expenses={expenses}
     />
   </div>
 
-  <div className="h-[400px]">
+  <div className="min-w-0 h-[550px] md:h-[400px] ">
     <QuickActions
       savingsPercentage={savingsPercentage}
     />

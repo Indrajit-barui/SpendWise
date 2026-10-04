@@ -50,85 +50,109 @@ const COLORS = [
 ];
 
   return (
-    <div className="w-full min-h-[300px] rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 flex flex-col">
-                {/* Header */}
-        <div className="flex justify-between px-2 items-center p-2">
-            <div>
-             <p className="font-bold">Expenses by category</p>
-             <p className="text-sm text-gray-500">Breakdown of your expenses</p>
-            </div>
-            <div>
-<button className="border border-gray-200 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
-  This month
-  <ChevronDown size={16} />
-</button>
-            </div>
+<div className="w-full min-w-0 min-h-[300px] rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 flex flex-col overflow-hidden">
 
-        </div>
-        <div className="flex flex-col 2xl:flex-row items-center gap-6 2xl:gap-8 px-2 pb-5">
-        <div className="relative flex-1 w-full h-[200px] 2xl:w-1/2 ">
-<div className="absolute inset-0  flex flex-col items-center justify-center pointer-events-none">
-  <p className="text-xl font-bold">
-    ₹ {totalExpenses.toLocaleString("en-IN")}
-  </p>
+  {/* Header */}
+  <div className="flex min-w-0 flex-wrap items-center justify-between gap-3 p-2">
 
-  <p className="text-xs text-gray-500">
-    Total Expenses
-  </p>
-</div>
+    <div className="min-w-0">
+      <p className="font-bold">
+        Expenses by category
+      </p>
 
-          <ResponsiveContainer width="100%" height="100%">
+      <p className="text-sm text-gray-500">
+        Breakdown of your expenses
+      </p>
+    </div>
+
+    <div className="shrink-0">
+      <button className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm">
+        This month
+        <ChevronDown size={16} />
+      </button>
+    </div>
+
+  </div>
+
+  {/* Chart + categories */}
+  <div className="flex min-w-0 flex-col items-center gap-6 px-2 pb-5 2xl:flex-row 2xl:gap-8">
+
+    {/* Pie Chart */}
+    <div className="relative min-w-0 w-full h-[200px] 2xl:flex-1">
+
+      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+        <p className="text-xl font-bold">
+          ₹ {totalExpenses.toLocaleString("en-IN")}
+        </p>
+
+        <p className="text-xs text-gray-500">
+          Total Expenses
+        </p>
+      </div>
+
+      <ResponsiveContainer width="100%" height="100%">
         <PieChart>
-
-
-            <Pie
+          <Pie
             data={categoryData}
             dataKey="amount"
             nameKey="category"
             innerRadius="60%"
-            outerRadius="90%"            >
-            {
-              categoryData.map((data,index)=>(
-       <Cell
-      key={`cell-${index}`}
-      fill={COLORS[index % COLORS.length]}
-      />
-              ))
-            }
+            outerRadius="90%"
+          >
+            {categoryData.map((data, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
 
-           </Pie>
           <Tooltip />
-
-          
         </PieChart>
-      </ResponsiveContainer> 
-      </div> 
-     
-            {/* Expenses categories */}
-      <div className="space-y-3 w-full 2xl:w-1/2">
-        {
-          categoryData.slice(0,5).map((item,index)=>(
-            <div key={item.category} className="grid grid-cols-3 ">
-              {/* name */}
-              <div className="flex items-center gap-2">
+      </ResponsiveContainer>
 
-                  <span
-                     className="h-3 w-3 rounded-sm shrink-0 "
-                     style={{backgroundColor:COLORS[index%COLORS.length]}}
-                   ></span>
+    </div>
 
-                   <span>{item.category}</span>
-               </div>
-               {/* Amount */}
-              <span className="text-right"><i className="fa-solid fa-indian-rupee-sign"></i>{item.amount}</span>
-              {/* percentage  */}
-               <span className="text-gray-400 text-right">{((item.amount/totalExpenses)*100).toFixed(1)} <i className="fa-solid fa-percent"></i></span>
-            </div> 
-          ))
-        }
-      </div>
-       </div>
+    {/* Categories */}
+    <div className="w-full min-w-0 space-y-3 2xl:flex-1">
+
+      {categoryData.slice(0, 5).map((item, index) => (
+        <div
+          key={item.category}
+          className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto_auto] gap-2"
+        >
+
+          <div className="flex min-w-0 items-center gap-2">
+
+            <span
+              className="h-3 w-3 shrink-0 rounded-sm"
+              style={{
+                backgroundColor: COLORS[index % COLORS.length]
+              }}
+            />
+
+            <span className="min-w-0 truncate">
+              {item.category}
+            </span>
+
+          </div>
+
+          <span className="whitespace-nowrap text-right">
+            ₹{item.amount}
+          </span>
+
+          <span className="whitespace-nowrap text-right text-gray-400">
+            {((item.amount / totalExpenses) * 100).toFixed(1)}%
+          </span>
+
         </div>
+      ))}
+
+    </div>
+
+  </div>
+
+</div>
  
   )
 }

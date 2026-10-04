@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 const QuickActions = ({savingsPercentage}) => {
 const navigate = useNavigate();
   return (
-    <div className="w-full h-full rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] px-2 py-2">
+    <div className="w-full h-full rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] px-2 py-2 ">
         {/* header */}
         <div className="flex flex-col gap-1">
             <p className="text-xl font-bold">Quick Actions</p>
             <p className="text-sm text-gray-600">Everything you need in one place</p>
         </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
 <button
   type="button"
 onClick={() => navigate("/dashboard/Income")}

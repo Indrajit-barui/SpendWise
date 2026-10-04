@@ -1,6 +1,7 @@
 import { Datepicker } from "../Datepicker"
 
 import { useLocation } from "react-router-dom"
+
 import {
   Bell,
   LayoutDashboard,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 
 const  Header = ({setSidebar}) => {
+
 const pageIcons = {
     Dashboard: LayoutDashboard,
     Income: Wallet,
@@ -32,28 +34,38 @@ const pageIcons = {
 
   const PageIcon = pageIcons[pageName] || LayoutDashboard;
   return (
-    <header className="flex items-center justify-between p-4">
-      
-    
-        {/* left section */}
-        <div className="flex items-center gap-4">
-           <i className="fa-solid fa-bars text-xl  cursor-pointer" onClick={()=>setSidebar(true)}></i>
-           
-           <PageIcon className="text-purple-600" size={25}/>
+<header className="sticky top-0 z-50 flex h-16 w-full min-w-0 items-center justify-between gap-2 bg-white px-4 shadow-sm">
 
-           <p className="text-xl md:text-2xl">{displayName}</p>
-        </div>
+  {/* left section */}
+  <div className="flex min-w-0 items-center gap-4">
 
-        {/* right section */}
+    <i
+      className="fa-solid fa-bars text-xl cursor-pointer"
+      onClick={() => setSidebar(true)}
+    ></i>
 
-        <div className="flex items-center gap-2 ">
-        
-         <Datepicker/>
-         <Bell/>
-      
-        </div>
-        
-        </header>
+    <PageIcon
+      className="text-purple-600"
+      size={25}
+    />
+
+    <p className="min-w-0 truncate text-xl md:text-2xl">
+      {displayName}
+    </p>
+
+  </div>
+
+  {/* right section */}
+  <div className="flex shrink-0 items-center gap-2">
+
+    <Datepicker />
+    <Bell />
+
+  </div>
+
+
+</header>
+
   )
 }
 

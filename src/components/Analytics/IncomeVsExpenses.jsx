@@ -78,10 +78,10 @@ const chartData = months.map((month) => {
 
 
   return (
-    <div className="w-full min-h-[300px] rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 flex flex-col">
+<div className="w-full min-w-0 min-h-[300px] rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] mt-5 flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex justify-between px-2 items-center p-2">
-            <div>
+            <div className="min-w-0">
              <p className="font-bold">Income vs Expenses</p>
              <p className="text-sm text-gray-500">Monthly comparison of income and expenses</p>
             </div>
@@ -95,7 +95,7 @@ const chartData = months.map((month) => {
         </div>
 
         {/* Chart */}
-        <div className="h-[250px] w-full px-2 pb-2">
+        <div className="h-[250px] w-full min-w-0 px-2 pb-2">
 <ResponsiveContainer width="100%" height="100%">
    <BarChart  data={chartData}>
       <XAxis dataKey="month" />

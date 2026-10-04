@@ -5,6 +5,7 @@ import {
   Mail,
   LockKeyhole,
   Eye,
+  EyeOff,
   ArrowRight,
   Target,
   ChartPie,
@@ -13,7 +14,7 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Dashboard from "./Dashboard";
+
 const Signup = () => {
   const navigate=useNavigate();
   const [formData,setFormData]=useState({
@@ -24,6 +25,7 @@ const Signup = () => {
   })
 const [confirmPasswordError, setConfirmPasswordError] = useState("");
 const [emailError, setEmailError] = useState("");
+const [showPassword,setShowPassword]=useState(false)
   const handleSignup=async(e)=>{
     e.preventDefault();
    if (formData.password !== formData.confirmPassword) {
@@ -324,7 +326,8 @@ const [emailError, setEmailError] = useState("");
               />
 
               <input
-                type="password"
+                
+                type={showPassword ? "text" : "password"}
                 value={formData.password}
                 onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
@@ -333,10 +336,13 @@ const [emailError, setEmailError] = useState("");
                 className="h-11 w-full rounded-lg border border-gray-300 pl-10 pr-10 text-sm outline-none transition focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
               />
 
-              <Eye
-                size={19}
-                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400"
-              />
+<button
+  type="button"
+  onClick={() => setShowPassword(!showPassword)}
+  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+>
+  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+</button>
 
             </div>
 

@@ -32,7 +32,7 @@ const handleLogout = () => {
         h-screen w-64
         bg-white
         border-r
-        z-50
+        z-60
         transition-transform duration-300
 
         ${

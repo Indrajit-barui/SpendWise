@@ -51,11 +51,11 @@ const currentmon=today.toLocaleString("en-US",{
     month:"short"
 })
   return (
-    <div className="w-full h-full rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2">
+<div className="w-full min-w-0 h-full rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 overflow-hidden">
         {/* header */}
 
-        <div className="flex justify-between items-center">
-            <div>
+        <div className="flex justify-between items-center min-w-0 gap-2">
+            <div className="min-w-0">
                 <p className="text-xl font-bold">Recent transaction {`${currentYear} ${currentmon}`}</p>
                 <p className="text-gray-600 text-sm">A list of your income and Expenses for this month</p>
             </div>
@@ -67,7 +67,7 @@ const currentmon=today.toLocaleString("en-US",{
         </div>
         {/* Recent Transaction */}
          {/* Table Header */}
-        <div className="hidden xl:grid grid-cols-5 border mt-2 px-2 py-2 bg-gray-400">
+        <div className="hidden xl:grid grid-cols-4 border mt-2 px-2 py-2 bg-gray-400">
            <div>Type</div>
 
            <div>Category</div>
@@ -81,7 +81,7 @@ const currentmon=today.toLocaleString("en-US",{
                 recentTransactions.map((item)=>(
                     <div key={item._id}>
                         {/* Desktop version */}
-                        <div className="hidden xl:grid grid-cols-5 border py-2 items-center">
+                        <div className="hidden xl:grid grid-cols-4 border py-2 items-center">
                             <div className={`h-10 w-10 rounded-full ${item.type==="income"?"bg-green-100":"bg-red-100"} flex items-center justify-center text-xl font-bold`}>
                                 {
                                     item.type==="income"?(
