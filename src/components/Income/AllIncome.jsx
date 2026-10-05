@@ -431,7 +431,7 @@ const Icon =
 <div className="flex flex-col gap-4 border-t px-2 py-4 sm:flex-row sm:items-center sm:justify-between">
 
   {/* Showing entries */}
-<p className="text-sm text-gray-500">
+<p className="text-sm text-gray-500 text-center">
   Showing{" "}
   <span className="font-medium text-gray-700">
     {startEntry}–{endEntry}
@@ -444,7 +444,7 @@ const Icon =
 </p>
 
   {/* Pagination */}
-  <div className="flex items-center gap-2 ">
+  <div className="flex items-center gap-2 justify-center ">
 
     {/* Previous */}
     <button
@@ -485,7 +485,7 @@ const Icon =
   </div>
 
   {/* Per page */}
-  <button className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm">
+  <button className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm ">
     5 per page
     <ChevronDown size={16} />
   </button>

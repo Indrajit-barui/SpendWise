@@ -420,22 +420,35 @@ className="flex items-center gap-2 justify-center">
 )})}
         </div>
 
-<div className='bg-red-100 h-20 md:h-10 w-full flex items-center mt-2 rounded-sm'>
-   <div className='flex flex-col md:flex-row gap-3 text-red-800 font-medium'>
-    {/* icon */}
-    <ChartNoAxesColumnIncreasing size={20}/>
-    <p>Total Expenses: ₹ {total_expenses}</p>
-    <div className='h-5 w-px bg-gray-700'>
+<div className="mt-2 flex w-full items-center rounded-lg bg-red-100 px-4 py-3 md:h-10 md:py-0">
 
+  <div className="flex w-full flex-col gap-2 text-sm font-medium text-red-800 md:flex-row md:items-center md:justify-center md:gap-4">
+
+    {/* Total Expenses */}
+    <div className="flex items-center gap-2">
+      <ChartNoAxesColumnIncreasing size={20} className="shrink-0" />
+
+      <p>
+        Total Expenses: ₹ {total_expenses}
+      </p>
     </div>
-    <p>{total_Transaction} Transactions</p>
-   </div>
+
+    {/* Separator */}
+    <div className="hidden h-5 w-px bg-red-300 md:block"></div>
+
+    {/* Transactions */}
+    <p className="pl-7 md:pl-0">
+      {total_Transaction} Transactions
+    </p>
+
+  </div>
+
 </div>
 <div className="flex flex-col gap-4 border-t px-2 py-4 sm:flex-row sm:items-center sm:justify-between">
 
   {/* Showing entries */}
   {/* Showing entries */}
-<p className="text-sm text-gray-500">
+<p className="text-sm text-gray-500 text-center">
   Showing{" "}
   <span className="font-medium text-gray-700">
     {startEntry}–{endEntry}
@@ -448,7 +461,7 @@ className="flex items-center gap-2 justify-center">
 </p>
 
   {/* Pagination */}
-  <div className="flex items-center gap-2">
+  <div className="flex items-center gap-2 justify-center">
 
     {/* Previous */}
     <button
@@ -489,7 +502,7 @@ className="flex items-center gap-2 justify-center">
   </div>
 
   {/* Per page */}
-  <button className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm">
+  <button className="flex items-center  justify-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm">
     5 per page
     <ChevronDown size={16} />
   </button>
