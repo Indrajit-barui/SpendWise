@@ -1,5 +1,5 @@
 
-import { ArrowUp,ArrowDown } from "lucide-react";
+import { ArrowUp,ArrowDown,ArrowRight,Receipt } from "lucide-react";
 import { useState } from "react";
 import {
   Dialog,
@@ -50,6 +50,7 @@ const recentTransactions2=[...currentmonthIncome,...currentmonthExpenses].sort((
 const currentmon=today.toLocaleString("en-US",{
     month:"short"
 })
+ const hasTransactions = recentTransactions.length > 0;
   return (
 <div className="w-full min-w-0 h-full rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2 overflow-hidden">
         {/* header */}
@@ -60,9 +61,19 @@ const currentmon=today.toLocaleString("en-US",{
                 <p className="text-gray-600 text-sm">A list of your income and Expenses for this month</p>
             </div>
             <div>
-              <button 
-              onClick={()=>setViewall(true)}
-              type="button" className=" text-white bg-blue-600 cursor-pointer border w-20 h-10 px-2 py-1 rounded-lg flex items-center justify-center shrink-0">View All</button>
+{hasTransactions && (
+  <button
+    onClick={() => setViewall(true)}
+    type="button"
+    className="group inline-flex h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-sky-200 bg-sky-50 px-4 text-sm font-medium text-sky-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-sky-500 hover:bg-sky-600 hover:text-white hover:shadow-md hover:shadow-sky-500/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 active:translate-y-0 active:scale-95"
+  >
+    View All
+    <ArrowRight
+      size={16}
+      className="transition-transform duration-200 group-hover:translate-x-1"
+    />
+  </button>
+)}
             </div>
         </div>
         {/* Recent Transaction */}
@@ -76,6 +87,7 @@ const currentmon=today.toLocaleString("en-US",{
         </div>
 
         {/* Recent Transaction data*/} 
+        {hasTransactions ? (
         <div>
             {
                 recentTransactions.map((item)=>(
@@ -150,6 +162,28 @@ const currentmon=today.toLocaleString("en-US",{
     ))
 }
         </div>
+        ):(
+
+  /* Empty State */
+
+  <div className="flex min-h-[250px] flex-col items-center justify-center px-4 text-center">
+
+    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-50">
+      <Receipt size={30} className="text-indigo-500" />
+    </div>
+
+    <h3 className="text-lg font-semibold text-gray-800">
+      No transactions yet!
+    </h3>
+
+    <p className="mt-2 max-w-xs text-sm text-gray-500">
+      You haven't recorded any income or expenses this month.
+      Your recent transactions will appear here.
+    </p>
+
+  </div>
+
+)}
 <Dialog open={viewall} onOpenChange={setViewall}>
   <DialogContent>
     <DialogHeader>

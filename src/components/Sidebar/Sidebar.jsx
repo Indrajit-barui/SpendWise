@@ -168,13 +168,15 @@ const handleLogout = () => {
         </div>
 <div>
 <button
-onClick={handleLogout}
-  className="flex items-center gap-3 w-full mt-4 px-3 py-2.5 rounded-lg
-             text-gray-600 hover:text-red-600 hover:bg-red-50
-             transition-colors duration-200"
+  type="button"
+  onClick={handleLogout}
+  className="group mt-4 flex w-full cursor-pointer items-center gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 active:scale-[0.98]"
 >
-  <LogOut size={19} />
-  <span className="text-sm font-medium">Logout</span>
+  <LogOut
+    size={19}
+    className="transition-transform duration-200 group-hover:translate-x-0.5"
+  />
+  <span>Logout</span>
 </button>
 </div>
       </div>

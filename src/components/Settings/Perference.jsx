@@ -33,9 +33,9 @@ const Perference = () => {
     {/* Left */}
     <div className="flex min-w-0 items-center gap-3 xl:gap-5">
 
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-200">
-        <CalendarDays size={28} />
-      </div>
+<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-100 to-violet-100 text-indigo-600 shadow-sm ring-1 ring-indigo-200/60 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:shadow-indigo-500/20">
+  <CalendarDays size={24} />
+</div>
 
       <div className="min-w-0">
         <p className="font-bold">
@@ -91,10 +91,9 @@ const Perference = () => {
 
     {/* Left */}
     <div className="flex min-w-0 items-center gap-3 xl:gap-5">
-
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-200">
-        <Moon size={24} />
-      </div>
+<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-100 to-indigo-100 text-violet-600 shadow-sm ring-1 ring-violet-200/60 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:shadow-violet-500/20">
+  <Moon size={24} />
+</div>
 
       <div className="min-w-0">
         <p className="font-bold">

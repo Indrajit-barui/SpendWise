@@ -98,9 +98,9 @@ const handleClearData = async () => {
     {/* Left */}
     <div className="flex min-w-0 items-center gap-3 xl:gap-5">
 
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-200">
-        <CloudDownload size={28} />
-      </div>
+<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-600">
+  <CloudDownload size={24} />
+</div>
 
       <div className="min-w-0">
         <p className="font-bold">
@@ -141,9 +141,9 @@ const handleClearData = async () => {
     {/* Left */}
     <div className="flex min-w-0 items-center gap-3 xl:gap-5">
 
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-200">
-        <Trash2 size={24} />
-      </div>
+<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 border-rose-200 bg-rose-50 text-rose-500 transition-all duration-200 hover:rotate-3 hover:border-rose-500 hover:bg-rose-500 hover:text-white">
+  <Trash2 size={24} />
+</div>
 
       <div className="min-w-0">
         <p className="font-bold">
@@ -180,7 +180,7 @@ const handleClearData = async () => {
 
 
   {/* Dialog */}
-  <Dialog open={open} onOpenChange={setOpen}>
+<Dialog open={open} onOpenChange={setOpen}>
 
     <DialogContent>
 

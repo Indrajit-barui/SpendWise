@@ -1,4 +1,4 @@
-import {ChevronDown} from "lucide-react"
+import {ChevronDown,Receipt} from "lucide-react"
 import {
   PieChart,
   Pie,
@@ -9,28 +9,50 @@ import {
 } from "recharts";
 const ExpensesByCategory = ({expenses=[]}) => {
 
-const categories=[...new Set(
-  expenses.map((expense)=> expense.category)
+  // Get current month and year
+const currentDate = new Date();
+const currentMonth = currentDate.getMonth();
+const currentYear = currentDate.getFullYear();
+
+// Filter current month's expenses
+const monthlyExpenses = expenses.filter((expense) => {
+  const expenseDate = new Date(expense.date);
+
+  return (
+    expenseDate.getMonth() === currentMonth &&
+    expenseDate.getFullYear() === currentYear
+  );
+});
+
+
+
+
+// Calculate total monthly expenses
+const totalExpenses = monthlyExpenses.reduce((acc, curr) => {
+  return acc + Number(curr.amount);
+}, 0);
+const categories = [...new Set(
+  monthlyExpenses.map((expense) => expense.category)
 )];
+
 const categoryData = categories.map((category) => {
 
-  const total = expenses
-    .filter((expense) => {
-      return expense.category === category;
-    })
+  const total = monthlyExpenses
+    .filter((expense) => expense.category === category)
     .reduce((total, expense) => {
       return total + Number(expense.amount);
     }, 0);
 
   return {
-    category: category,
+    category,
     amount: total,
   };
-}).sort((a,b)=> b.amount-a.amount);
 
-const totalExpenses=expenses.reduce((acc,curr)=>{
-    return acc+Number(curr.amount)
-},0)
+}).sort((a, b) => b.amount - a.amount);
+
+
+
+
 const COLORS = [
   "#ef4444", // red
   "#f97316", // orange
@@ -74,7 +96,10 @@ const COLORS = [
 
   </div>
 
-  {/* Chart + categories */}
+{/* Chart + Categories */}
+
+{totalExpenses > 0 ? (
+
   <div className="flex min-w-0 flex-col items-center gap-6 px-2 pb-5 2xl:flex-row 2xl:gap-8">
 
     {/* Pie Chart */}
@@ -138,7 +163,7 @@ const COLORS = [
           </div>
 
           <span className="whitespace-nowrap text-right">
-            ₹{item.amount}
+            ₹{item.amount.toLocaleString("en-IN")}
           </span>
 
           <span className="whitespace-nowrap text-right text-gray-400">
@@ -151,6 +176,29 @@ const COLORS = [
     </div>
 
   </div>
+
+) : (
+
+  /* Empty State */
+
+  <div className="flex min-h-[250px] flex-col items-center justify-center px-4 text-center">
+
+    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-50">
+      <Receipt size={30} className="text-indigo-500" />
+    </div>
+
+    <h3 className="text-lg font-semibold text-gray-800">
+      No expenses yet!
+    </h3>
+
+    <p className="mt-2 max-w-xs text-sm text-gray-500">
+      You haven't recorded any expenses this month.
+      Start tracking your spending to see your category breakdown.
+    </p>
+
+  </div>
+
+)}
 
 </div>
  

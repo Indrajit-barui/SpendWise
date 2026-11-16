@@ -217,22 +217,25 @@ const currentIncome = filteredIncome.slice(
     </div>
 
     {/* Add Income */}
-    <button
-      onClick={() => {
-        setOpen(true);
-        setFormData({
-          source: "",
-          category: "Salary",
-          amount: "",
-          date: "",
-          notes: "",
-        });
-      }}
-      className="flex shrink-0 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-white"
-    >
-      <Plus size={18} />
-      Add Income
-    </button>
+<button
+  onClick={() => {
+    setOpen(true);
+    setFormData({
+      source: "",
+      category: "Salary",
+      amount: "",
+      date: "",
+      notes: "",
+    });
+  }}
+  className="group flex shrink-0 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-green-600 px-5 py-2.5 text-sm font-medium text-white shadow-md shadow-emerald-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-500/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:translate-y-0 active:scale-95"
+>
+  <Plus
+    size={18}
+    className="transition-transform duration-200 group-hover:rotate-90"
+  />
+  Add Income
+</button>
 
   </div>
 
