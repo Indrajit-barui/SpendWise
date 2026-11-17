@@ -5,12 +5,10 @@ import TopincomeSources from "@/components/Income/TopincomeSources"
 import EmptyIncomeState from "@/components/Income/EmptyIncomeState"
 import { Context } from "@/Context/Context"
 import { useContext } from "react"
+import { calculateTotalIncome } from "../utils/financeUtils";
 const Income = () => {
 const {income,setIncome}=useContext(Context)
-const TotalIncome = income.reduce((acc, curr) => {
-  return acc + (Number(curr.amount) || 0);
-}, 0);
-
+const TotalIncome = calculateTotalIncome(income);
 const HighestIncome = income.reduce((highest, curr) => {
   return (Number(curr.amount) || 0) > (Number(highest.amount) || 0)
     ? curr

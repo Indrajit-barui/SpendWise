@@ -7,8 +7,22 @@ import MonthlyInsights from "@/components/Report/MonthlyInsights"
 import { useContext } from "react"
 import { Context } from "../Context/Context"
 import DownloadReport from "@/components/Report/DownloadReport"
+import {
+  calculateCurrentMonthIncome,
+  calculateCurrentMonthExpenses,
+  calculateBalance,
+  calculateTodayExpenses,
+} from "../utils/financeUtils";
 const Report = () => {
   const {expenses,income}=useContext(Context);
+
+  const monthlyIncome = calculateCurrentMonthIncome(income);
+
+const monthlyExpenses = calculateCurrentMonthExpenses(expenses);
+
+const balance = calculateBalance(income, expenses);
+
+const todayExpenses = calculateTodayExpenses(expenses);
   return (
     <div className="">
       <div className="w-full  rounded-lg border border-gray-200 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] py-4 px-2">
@@ -42,7 +56,12 @@ onClick={()=>DownloadReport(income,expenses)}
 </button>
           </div>
         </div>
-       <ReportStats/>
+       <ReportStats
+  totalIncome={monthlyIncome}
+  totalExpenses={monthlyExpenses}
+  balance={balance}
+  todayExpenses={todayExpenses}
+/>
       </div>
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
 

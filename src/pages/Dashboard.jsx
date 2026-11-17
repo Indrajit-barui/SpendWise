@@ -8,25 +8,28 @@ import RecenttransactionReport from "@/components/Report/RecenttransactionReport
 import EmptyDashboard from "@/components/Dashboard/EmptyDashboard";
 import {useContext} from "react"
 import { Context } from "@/Context/Context";
+import {
+  calculateTodayExpenses,
+  calculateBalance,
+  calculateCurrentMonthIncome,
+  calculateCurrentMonthExpenses,
+
+} from "../utils/financeUtils";
 const Dashboard = () => {
   const{expenses,income,isLoading}=useContext(Context);
 
 
-  const totalIncome = income.reduce(
-    (total, item) => total + Number(item.amount),
-    0
-  );
 
-  const totalExpenses = expenses.reduce(
-    (total, item) => total + Number(item.amount),
-    0
-  );
+const monthlyIncome = calculateCurrentMonthIncome(income);
 
-  const savings = totalIncome - totalExpenses;
+const monthlyExpenses = calculateCurrentMonthExpenses(expenses);
 
-  const savingsPercentage =
-    totalIncome > 0
-      ? ((savings / totalIncome) * 100).toFixed(1): 0;
+const savings = calculateBalance(income, expenses);
+const todayExpenses = calculateTodayExpenses(expenses);
+const savingsPercentage =
+  monthlyIncome > 0
+    ? ((monthlyIncome - monthlyExpenses) / monthlyIncome * 100).toFixed(1)
+    : 0;
           if(isLoading){
       return (
         <div>Loading...</div>
@@ -98,7 +101,12 @@ const Dashboard = () => {
 </section>
 
       {/* Stats */}
-      <Stats />
+<Stats
+  totalIncome={monthlyIncome}
+  totalExpenses={monthlyExpenses}
+  balance={savings}
+  todayExpenses={todayExpenses}
+/>
 
       {/* Charts */}
 <div className="grid min-w-0 grid-cols-1 lg:grid-cols-2 gap-4">

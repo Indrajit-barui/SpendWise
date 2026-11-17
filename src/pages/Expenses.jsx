@@ -7,14 +7,12 @@ import EmptyState from "@/components/Expenses/EmptyState"
 import { useContext } from "react"
 import { Context } from "@/Context/Context"
 
-
+import { calculateTotalExpenses } from "../utils/financeUtils";
 
 
 const Expenses = () => {
 const {expenses,setExpenses}=useContext(Context)
-const Totalexpense=expenses.reduce((acc,curr)=>{
-  return acc+Number(curr.amount);
-},0)
+const Totalexpense = calculateTotalExpenses(expenses);
 
 const Highestexpense=expenses.reduce((highest,curr)=>{
   return curr.amount> highest.amount?curr:highest
@@ -22,8 +20,10 @@ const Highestexpense=expenses.reduce((highest,curr)=>{
 
 
 const TotalTransactions=expenses.length;
-const AverageExpense=(Totalexpense/expenses.length).toFixed(2);
-const data=expenses.length>0;
+const AverageExpense =
+  expenses.length > 0
+    ? (Totalexpense / expenses.length).toFixed(2)
+    : 0;const data=expenses.length>0;
   return (
       data?   ( <div>
 
