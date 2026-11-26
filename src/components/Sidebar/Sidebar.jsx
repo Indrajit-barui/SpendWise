@@ -14,15 +14,30 @@ import { useNavigate } from "react-router-dom";
 import NavItem from "./NavItem";
 import { useState } from "react";
 import { useContext } from "react";
-import { SettingContext } from "@/Context/Context";
+import { Context,SettingContext } from "@/Context/Context";
 function Sidebar({ isSidebarOpen, setSidebar }) {
   const[activeItem,setActiveItem]=useState("Dashboard")
  
-  const{user}=useContext(SettingContext)
   const navigate = useNavigate();
 
+
+const { setIncome, setExpenses, refreshAuth } = useContext(Context);
+
+const { user, setUser } = useContext(SettingContext);
 const handleLogout = () => {
+  // Remove authentication token
   localStorage.removeItem("token");
+
+  // Clear previous user's financial data
+  setIncome([]);
+  setExpenses([]);
+
+  // Clear previous user's profile
+  setUser(null);
+
+  // Notify App that authentication has changed
+  refreshAuth();
+
   navigate("/login");
 };
   return (

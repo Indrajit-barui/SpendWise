@@ -4,15 +4,17 @@ import { Wallet,ShieldCheck ,ChartNoAxesCombined,Target,ChartPie,  Mail,
   EyeOff,
   WalletCards,
   ArrowRight} from "lucide-react";
-
+import { useContext } from "react";
+import { Context } from "@/Context/Context";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 const Login = () => {
   const navigate=useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword,setShowPassword]=useState(false)
-
+const { refreshAuth } = useContext(Context);
   const handleLogin = async (e) => {
   e.preventDefault();
 
@@ -29,10 +31,13 @@ const Login = () => {
 
   const data = await response.json();
 
-  if (response.ok) {
-    localStorage.setItem("token", data.token);
-    navigate("/dashboard");
-  } else {
+if (response.ok) {
+  localStorage.setItem("token", data.token);
+
+  refreshAuth();
+
+  navigate("/dashboard");
+} else {
     alert(data.message);
   }
 };

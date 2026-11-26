@@ -285,20 +285,36 @@ const currentExpenses = filteredExpenses.slice(
                   <div className='text-sm text-gray-500'>
                     {item.notes || "No notes"}
                   </div>
-<div 
-onClick={()=>{
-  SetEditopen(true)
+<div className="flex items-center gap-2 justify-center">
+
+  {/* Edit Button */}
+  <button
+    type="button"
+    onClick={() => {
+      SetEditopen(true);
       setFormData({
-      ...item,
-      date:item.date.slice(0,10)
-    })
-}}
-className="flex items-center gap-2 justify-center">
-  <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 transition hover:bg-gray-100 hover:text-indigo-600 cursor-pointer"><Pencil size={17}/></button>
-  <button 
-   onClick={()=>handleDelete(item._id)}
-  className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-red-500 transition hover:bg-red-50 hover:bg-red-500 hover:text-white"><Trash2 size={17}/></button>
-</div>                  
+        ...item,
+        date: item.date.slice(0, 10)
+      });
+    }}
+    className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 transition hover:bg-gray-100 hover:text-indigo-600"
+  >
+    <Pencil size={17} />
+  </button>
+
+  {/* Delete Button */}
+  <button
+    type="button"
+    onClick={(e) => {
+      e.stopPropagation();
+      handleDelete(item._id);
+    }}
+    className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-red-500 transition hover:bg-red-500 hover:text-white"
+  >
+    <Trash2 size={17} />
+  </button>
+
+</div>                 
                 </div>
                 {/* mobile */}
 

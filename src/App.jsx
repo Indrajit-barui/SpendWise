@@ -1,4 +1,4 @@
-import { useState ,useEffect,useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import FullState from "./components/Dashboard/FullState";
@@ -10,11 +10,12 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import LoadingScreen from "./LoadingScreen";
 import { Context } from "./Context/Context";
+
 const DashboardRoute = () => {
   const { income, expenses, isLoading } = useContext(Context);
 
   if (isLoading) {
-    return <div><LoadingScreen/></div>;
+    return <LoadingScreen />;
   }
 
   if (income.length === 0 && expenses.length === 0) {
@@ -24,48 +25,111 @@ const DashboardRoute = () => {
   return <FullState />;
 };
 
+const App = () => {
+  const [income, setIncome] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-const App = () => {        
-  const [income, setIncome] = useState([]);         
-  const [expenses, setExpenses] = useState([]);    
-  const [isLoading, setIsLoading] = useState(true);    
-useEffect(() => {
-  const token = localStorage.getItem("token");
+  // Tracks login/logout changes
+  const [authVersion, setAuthVersion] = useState(0);
 
-  Promise.all([
-    fetch("http://localhost:5000/income", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => response.json()),
+  // Call this function whenever authentication changes
+  const refreshAuth = () => {
+    setAuthVersion((prev) => prev + 1);
+  };
 
-    fetch("http://localhost:5000/expenses", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => response.json()),
-  ])
-    .then(([incomeData, expenseData]) => {
-      setIncome(incomeData);
-      setExpenses(expenseData);
-      setIsLoading(false);
-    });
-}, []);
+  useEffect(() => {
+    let cancelled = false;
 
-  return (   
+    const fetchUserData = async () => {
+      setIsLoading(true);
+
+      const token = localStorage.getItem("token");
+
+      // No token means no logged-in user
+      if (!token) {
+        setIncome([]);
+        setExpenses([]);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const [incomeResponse, expenseResponse] = await Promise.all([
+          fetch("http://localhost:5000/income", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+
+          fetch("http://localhost:5000/expenses", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+        ]);
+
+        if (!incomeResponse.ok || !expenseResponse.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const [incomeData, expenseData] = await Promise.all([
+          incomeResponse.json(),
+          expenseResponse.json(),
+        ]);
+
+        if (!Array.isArray(incomeData) || !Array.isArray(expenseData)) {
+          throw new Error("Invalid data received from server");
+        }
+
+        if (!cancelled) {
+          setIncome(incomeData);
+          setExpenses(expenseData);
+        }
+      } catch (error) {
+        console.error("Data fetching error:", error);
+
+        if (!cancelled) {
+          setIncome([]);
+          setExpenses([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchUserData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authVersion]);
+
+  return (
     <Context.Provider
-      value={{ income, setIncome, expenses, setExpenses,isLoading }}
+      value={{
+        income,
+        setIncome,
+        expenses,
+        setExpenses,
+        isLoading,
+        refreshAuth,
+      }}
     >
       <BrowserRouter>
-<Routes>
-  <Route path="/" element={<Landing />} />
-  <Route path="/signup" element={<Signup />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/dashboard/*" element={<DashboardRoute />} />
-  <Route path="/forgot-password" element={<ForgotPassword />} />
-  <Route path="/reset-password/:token" element={<ResetPassword />} />
-
-</Routes>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard/*" element={<DashboardRoute />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPassword />}
+          />
+        </Routes>
       </BrowserRouter>
     </Context.Provider>
   );
