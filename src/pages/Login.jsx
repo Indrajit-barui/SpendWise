@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { Context } from "@/Context/Context";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import API_URL from "@/config/api";
 const Login = () => {
   const navigate=useNavigate();
   const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ const { refreshAuth } = useContext(Context);
   const handleLogin = async (e) => {
   e.preventDefault();
 
-  const response = await fetch("http://localhost:5000/auth/login", {
+  const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

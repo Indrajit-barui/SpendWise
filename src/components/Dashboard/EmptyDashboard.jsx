@@ -15,6 +15,7 @@ import {
 
 } from "@/components/ui/dialog"
 import { useState } from "react";
+import API_URL from "@/config/api";
 import { useContext } from "react";
 import { Context } from "../../Context/Context";
 const EmptyDashboard = () => {
@@ -30,7 +31,7 @@ const [formData, setFormData] = useState({
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const response = await fetch("http://localhost:5000/income", {
+  const response = await fetch(`${API_URL}/income`, {
     method: "POST",
 headers: {
   "Content-Type": "application/json",
@@ -65,7 +66,7 @@ const [formDataexpenses, setFormDataexpenses] = useState({
 const ExpensehandleSubmit = async (e) => {
   e.preventDefault();
 
-  const response = await fetch("http://localhost:5000/expenses", {
+  const response = await fetch(`${API_URL}/expenses`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

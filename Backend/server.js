@@ -22,6 +22,8 @@ app.use("/goals",goalRoutes);
 app.use("/auth",authRoutes)
 connectDB();
 
-app.listen(process.env.PORT, () => {
-  console.log("Server running on port 5000");
+const PORT = process.env.PORT 
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

@@ -11,14 +11,14 @@ import Report from "../../pages/Report";
 import Settings from "../../pages/Settings";
 import Budget_goals from "../../pages/Budget_goals";
 import { SettingContext } from "@/Context/Context";
-
+import API_URL from "@/config/api";
 const FullState = () => {
   const [isSidebarOpen, setSidebar] = useState(false);
   const [user, setUser] = useState(null);
   useEffect(() => {
   const token = localStorage.getItem("token");
 
-  fetch("http://localhost:5000/auth/me", {
+  fetch(`${API_URL}/auth/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

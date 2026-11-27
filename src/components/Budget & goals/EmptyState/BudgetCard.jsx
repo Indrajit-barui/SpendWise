@@ -8,7 +8,7 @@ import { Check, Wallet ,Plus, X,
   Gamepad2,
   MoreHorizontal,
   Tag} from "lucide-react";
-
+import API_URL from "@/config/api";
 import {
   Dialog,
   DialogContent,
@@ -92,8 +92,8 @@ const handleBudgetSubmit = async (e) => {
 
 const response = await fetch(
   budget
-    ? `http://localhost:5000/budgets/${budget._id}`
-    : "http://localhost:5000/budgets",
+    ? `${API_URL}/budgets/${budget._id}`
+    : `${API_URL}/budgets`,
   {
     method: budget ? "PUT" : "POST",
     headers: {
@@ -132,7 +132,7 @@ const handleDeleteCustomCategory = (name) => {
 };
 
 useEffect(() => {
-  fetch("http://localhost:5000/budgets")
+  fetch(`${API_URL}/budgets`)
     .then((response) => response.json())
     .then((data) => {
       if (data[0]) {

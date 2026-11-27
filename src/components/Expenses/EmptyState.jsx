@@ -10,6 +10,7 @@ import {
   DialogTitle,
 
 } from "@/components/ui/dialog"
+import API_URL from "@/config/api";
 const EmptyState = () => {
 const {setExpenses}=useContext(Context)
   
@@ -24,7 +25,7 @@ const [formData, setFormData] = useState({
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const response = await fetch("http://localhost:5000/expenses", {
+  const response = await fetch(`${API_URL}/expenses`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

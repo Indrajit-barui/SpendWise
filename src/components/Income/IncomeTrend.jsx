@@ -11,6 +11,7 @@ import {
   Area,
   CartesianGrid
 } from "recharts";
+
 const IncomeTrend = ({income}) => {
 const incomeTrendData = Array.from({ length: 6 }, (_, index) => {
   const date = new Date();

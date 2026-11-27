@@ -36,7 +36,7 @@ import {
 } from "@/components/ui/dialog"
 import { useState,useEffect, useContext } from 'react';
 import { Context } from "@/Context/Context";
-
+import API_URL from "@/config/api";
 const AllExpenses = () => {
 const {expenses,setExpenses}=useContext(Context)
 const [search, setSearch] = useState("");
@@ -72,7 +72,7 @@ const [formData, setFormData] = useState({
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const response = await fetch("http://localhost:5000/expenses", {
+  const response = await fetch(`${API_URL}/expenses`, {
     method: "POST",
     headers: {
      "Content-Type": "application/json",
@@ -98,7 +98,7 @@ const handleSubmit = async (e) => {
 
 // delete item
 const handleDelete=async(id)=>{
-const response = await fetch(`http://localhost:5000/expenses/${id}`, {
+const response = await fetch(`${API_URL}/expenses/${id}`, {
   method: "DELETE",
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -114,7 +114,7 @@ const handleEdit = async (e) => {
   e.preventDefault();
 
   const response = await fetch(
-    `http://localhost:5000/expenses/${formData._id}`,
+    `${API_URL}/expenses/${formData._id}`,
     {
       method: "PUT",
     headers: {

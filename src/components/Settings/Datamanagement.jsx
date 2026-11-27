@@ -10,6 +10,7 @@ import {
   DialogTitle,
 
 } from "@/components/ui/dialog"
+import API_URL from "@/config/api";
 const Datamanagement = () => {
   const { income, expenses,setIncome,setExpenses } = useContext(Context);
   const [open,setOpen]=useState(false);
@@ -65,7 +66,7 @@ const handleExport = () => {
 const handleClearData = async () => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch("http://localhost:5000/auth/clear-data", {
+  const response = await fetch(`${API_URL}/auth/clear-data`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

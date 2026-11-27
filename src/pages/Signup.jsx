@@ -11,6 +11,7 @@ import {
   ChartPie,
   ShieldCheck,
 } from "lucide-react";
+import API_URL from "@/config/api";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +36,8 @@ const [showPassword,setShowPassword]=useState(false)
     return;
      }
      setConfirmPasswordError("");
-    const response=await fetch("http://localhost:5000/auth/signup",{
+
+    const response=await fetch(`${API_URL}/auth/signup`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"

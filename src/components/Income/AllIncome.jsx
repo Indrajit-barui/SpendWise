@@ -27,7 +27,7 @@ ChevronRight,
 FileText,
 Calendar
 } from "lucide-react";
-
+import API_URL from "@/config/api";
 import {
   Dialog,
   DialogContent,
@@ -73,11 +73,12 @@ const [formData, setFormData] = useState({
   date: "",
   notes: "",
 });
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   console.log("HANDLE SUBMIT IS RUNNING");
 
-  const response = await fetch("http://localhost:5000/income", {
+  const response = await fetch(`${API_URL}/income`, {
     method: "POST",
     headers: {
      "Content-Type": "application/json",
@@ -103,7 +104,7 @@ const handleSubmit = async (e) => {
 
 // delete item
 const handleDelete=async(id)=>{
-const response = await fetch(`http://localhost:5000/income/${id}`, {
+const response = await fetch(`${API_URL}/income/${id}`, {
   method: "DELETE",
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -121,7 +122,7 @@ const handleEdit = async (e) => {
   e.preventDefault();
 
   const response = await fetch(
-    `http://localhost:5000/income/${formData._id}`,
+    `${API_URL}/income/${formData._id}`,
     {
       method: "PUT",
 headers: {

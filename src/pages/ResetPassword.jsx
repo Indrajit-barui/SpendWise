@@ -6,7 +6,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useState } from "react";
-
+import API_URL from "@/config/api";
 const ResetPassword = () => {
    const {token}=useParams();
    const navigate=useNavigate();
@@ -24,7 +24,7 @@ const handleSubmit = async (e) => {
   }
 
   const response = await fetch(
-    `http://localhost:5000/auth/reset-password/${token}`,
+    `${API_URL}/auth/reset-password/${token}`,
     {
       method: "POST",
       headers: {

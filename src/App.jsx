@@ -10,7 +10,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import LoadingScreen from "./LoadingScreen";
 import { Context } from "./Context/Context";
-
+import API_URL from "./config/api";
 const DashboardRoute = () => {
   const { income, expenses, isLoading } = useContext(Context);
 
@@ -56,13 +56,13 @@ const App = () => {
 
       try {
         const [incomeResponse, expenseResponse] = await Promise.all([
-          fetch("http://localhost:5000/income", {
+          fetch(`${API_URL}/income`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }),
 
-          fetch("http://localhost:5000/expenses", {
+          fetch(`${API_URL}/expenses`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

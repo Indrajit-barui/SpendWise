@@ -8,7 +8,7 @@ import {
 
 } from "@/components/ui/dialog"
 import { useState,useContext } from "react";
-
+import API_URL from "@/config/api";
 import {Budget_goalsContext} from './BudgetEmptyState'
 const GoalCard = () => {
 const {display,setDisplay} =useContext(Budget_goalsContext)
@@ -24,7 +24,7 @@ const {display,setDisplay} =useContext(Budget_goalsContext)
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const response = await fetch("http://localhost:5000/goals", {
+  const response = await fetch(`${API_URL}/goals`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -11,6 +11,7 @@ import { useState } from "react"
 import FeatureCard from "../Expenses/FeatureCard"
 import { useContext } from "react"
 import { Context } from "@/Context/Context"
+import API_URL from "@/config/api"
 const EmptyIncomeState = () => {
 const [open,setOpen]=useState(false);
 const {setIncome}=useContext(Context)
@@ -24,7 +25,7 @@ const [formData, setFormData] = useState({
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const response = await fetch("http://localhost:5000/income", {
+  const response = await fetch(`${API_URL}/income`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
